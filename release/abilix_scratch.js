@@ -351,6 +351,8 @@
 		}
 		
 		postMessage({event: "COMMAND__", data: p_buffer});
+
+		console.log("scratchCommand end" );
 	}
 
 	ext._getStatus = function() {
@@ -401,6 +403,8 @@
     	l_packet.resetCheck();
 
     	scratchCommand(l_packet._buffer);
+
+    	console.log("openMotor end ");
 
     };
 
