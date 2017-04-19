@@ -240,6 +240,7 @@
         "D": 3,
     };
 
+    // 
     var directionLabels = {
     	"RotateForward" : 0,
     	"RotateBackward" : 1
