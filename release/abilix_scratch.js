@@ -340,6 +340,8 @@
 	function postMessage(p_Message){
 
 		l_port.postMessage(p_Message);
+
+		console.log("postMessage " + l_port.name);
 	}
 
 	function scratchCommand(p_buffer, p_SessionId, p_callback){
