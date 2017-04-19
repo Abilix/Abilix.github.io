@@ -233,7 +233,7 @@
 	var status = false;
 	var _callbacks = {};
 
-	var portLabels = {
+	var moterPortLabels = {
         "A": 0,
         "B": 1,
         "C": 2,
@@ -241,8 +241,8 @@
     };
 
     var directionLabels = {
-    	"RotateForward" = 0,
-    	"RotateBackward" = 1
+    	"RotateForward" : 0,
+    	"RotateBackward" : 1
     };
 
     var speakerLabels = {
@@ -343,7 +343,7 @@
 
 	function scratchCommand(p_buffer, p_SessionId, p_callback){
 
-		if (p_SessionId != null && p_callback != null) {
+		if (p_SessionId !== null && p_callback !== null) {
 			_callbacks["callback_"+p_SessionId] = p_callback;
 		}
 		
@@ -391,7 +391,7 @@
     	l_packet.setSubCmd(0x01);
 
     	l_packet.setInt32(genNextID());
-    	l_packet.setInt32(portLabels[port]);
+    	l_packet.setInt32(moterPortLabels[port]);
     	l_packet.setInt32(directionLabels[direction]);
     	l_packet.setInt32(speed);
 
@@ -827,7 +827,7 @@
 		blocks : blocks[lang],
 		menus : menus[lang],
 		url : 'http://Abilix.github.io/abilix_scratch.js'
-	}
+	};
 
 	ScratchExtensions.register('Abilix', descriptor, ext);
 })({});
