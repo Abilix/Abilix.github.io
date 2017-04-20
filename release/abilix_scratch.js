@@ -337,7 +337,31 @@
 		}
 	}
 
-	l_port.onMessage.addListener(onMessage);
+  	function onDisconnect(){
+
+      	console.log(" onDisconnect ");
+
+      	l_port = chrome.runtime.connect("kdfnjcilpbphbadkncegkbnokgjinbnn", {name:"abilix_scratch"});
+
+      	if (l_port === null) {
+
+      		console.log(" runtime.connect fail ");
+      		return;
+      	}
+
+      	setLisetener();
+
+  	}
+
+  	function setLisetener(){
+
+  		l_port.onMessage.addListener(onMessage);
+  		l_port.onDisconnect.addListener(onDisconnect);
+
+  		console.log(" set port Listener success " + l_port.name);
+  	}
+
+  	setLisetener();
 
 	function postMessage(p_Message){
 
