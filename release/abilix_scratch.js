@@ -397,7 +397,8 @@
 
     	console.log("openMotor createNew end ");
 
-    	l_packet.setMasterCmd(0x0A);
+    	try{
+    		l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x01);
 
     	l_packet.setInt32(genNextID());
@@ -408,6 +409,15 @@
     	l_packet.resetCheck();
 
     	scratchCommand(l_packet._buffer);
+
+    	}
+    	catch(e){
+
+    		console.log("exception: " + e.message + " " + e.description);
+
+    	}
+
+    	
 
     	console.log("openMotor end ");
 
