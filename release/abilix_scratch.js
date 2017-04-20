@@ -349,11 +349,11 @@
       		return;
       	}
 
-      	setLisetener();
+      	setListener();
 
   	}
 
-  	function setLisetener(){
+  	function setListener(){
 
   		l_port.onMessage.addListener(onMessage);
   		l_port.onDisconnect.addListener(onDisconnect);
@@ -361,7 +361,7 @@
   		console.log(" set port Listener success " + l_port.name);
   	}
 
-  	setLisetener();
+  	setListener();
 
 	function postMessage(p_Message){
 
