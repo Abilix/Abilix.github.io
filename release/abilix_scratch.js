@@ -204,7 +204,7 @@
 
 			var littleendian = true;
 
-			
+			console.log("l_NewObject _buffer ");
 
 			l_NewObject._buffer = null;
 
@@ -224,6 +224,8 @@
 			}
 			
 			l_NewObject.offset = 11; //定位到 数据位
+
+			console.log("return l_NewObject ");
 
 			return l_NewObject;
 		}
@@ -392,6 +394,9 @@
     	console.log("openMotor " + port + " " + direction +" " + speed);
 
     	var l_packet = Packet.createNew(null, 16);
+
+    	console.log("openMotor createNew end ");
+
     	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x01);
 
