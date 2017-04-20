@@ -49,7 +49,7 @@
 
 			l_NewObject.setCheck = function(p_check){
 				var l_dataLength = l_NewObject.getDataLength();
-				l_NewObject.setInt8pos(l_dataLength + 3, p_type);
+				l_NewObject.setInt8pos(l_dataLength + 3, p_check);
 			};
 
 			l_NewObject.resetCheck = function(){
