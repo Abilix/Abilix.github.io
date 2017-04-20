@@ -346,13 +346,13 @@
 		console.log("postMessage " + l_port.name);
 	}
 
-	function scratchCommand(p_buffer, p_SessionId, p_callback){
+	function scratchCommand(p_packet, p_SessionId, p_callback){
 
 		if (p_SessionId !== null && p_callback !== null) {
 			_callbacks["callback_"+p_SessionId] = p_callback;
 		}
 		
-		postMessage({event: "COMMAND__", data: p_buffer});
+		postMessage({event: "COMMAND__", data: p_packet});
 
 		console.log("scratchCommand end" );
 	}
@@ -408,7 +408,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 
     	}
     	catch(e){
@@ -435,7 +435,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
     }
 
     ext.openSpeakerHi = function(param){
@@ -482,7 +482,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 
 	};
 
@@ -499,7 +499,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 
 	ext.DisplayPhoto = function(photoId){
@@ -515,7 +515,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 	ext.CloseDevice = function(deviceId){
 
@@ -529,7 +529,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 
 	ext.getUltrasonicForObstacles = function(portId, p_callback){
@@ -546,7 +546,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 
 	ext.getUltrasonicForDistance = function(portId, p_callback){
@@ -562,7 +562,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 
 	ext.getTouchSomething = function(portId, p_callback){
@@ -579,7 +579,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 	ext.getColorValue = function(portId, p_color, p_callback){
 
@@ -596,7 +596,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 	ext.getGrayscaleValue = function(portId, p_callback){
 
@@ -612,7 +612,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 	ext.takePhoto = function(portId){
 
@@ -628,7 +628,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 	ext.clockReset = function(){
 
@@ -643,7 +643,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 		
 	};
 	ext.getSystemTimeValue = function(p_callback){
@@ -659,7 +659,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 		
 	};
 	ext.calibrateCompass = function(){
@@ -675,7 +675,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 		
 	};
 	ext.getCompassValue = function(p_callback){
@@ -691,7 +691,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 	ext.getGyroscopeValue = function(dircetion, p_callback){
 
@@ -707,7 +707,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 
 	ext.microphoneRecode = function(portId, time){
@@ -725,7 +725,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 
 	  // Check for GET param 'lang'
