@@ -325,8 +325,15 @@
 		"TurnRight" : 3
 	};
 
-	// AppID:kdfnjcilpbphbadkncegkbnokgjinbnn
-	var l_port = chrome.runtime.connect("kdfnjcilpbphbadkncegkbnokgjinbnn", {name:"abilix_scratch"});
+	function Request(p_name)
+	{
+     	new RegExp("(^|&)"+p_name+"=([^&]*)").exec(window.location.search.substr(1));
+     	return RegExp.$2;
+	}
+
+	var AppID = Request("Id");
+
+	var l_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
 
 	console.log("port " + l_port.name);
 
@@ -341,7 +348,7 @@
 
       	console.log(" onDisconnect ");
 
-      	l_port = chrome.runtime.connect("kdfnjcilpbphbadkncegkbnokgjinbnn", {name:"abilix_scratch"});
+      	l_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
 
       	if (l_port === null) {
 
