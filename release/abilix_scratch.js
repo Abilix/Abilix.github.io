@@ -331,7 +331,7 @@
      	return RegExp.$2;
 	}
 
-	var AppID = Request("Id");
+	var AppID = Request("id");
 
 	var l_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
 
