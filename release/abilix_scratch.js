@@ -2,265 +2,255 @@
 
 	var Packet = {
 
-		self.createNew = function(p_buffer, p_length){
+		createNew : function(p_buffer, p_length){
 
-      var littleendian = false;
+			var l_NewObject = {};
 
-      var l_NewObject = {};
+			var littleendian = true;
 
-      l_NewObject.getMasterCmd = function(){
+			l_NewObject.getMasterCmd = function(){
 
-        return l_NewObject.getInt8pos(5);
-      };
+				return l_NewObject.getInt8pos(5);
+			};
 
-      l_NewObject.setMasterCmd = function(p_MasterCmd){
-        l_NewObject.setInt8pos(5, p_MasterCmd);
-      };
+			l_NewObject.setMasterCmd = function(p_MasterCmd){
+				l_NewObject.setInt8pos(5, p_MasterCmd);
+			};
 
-      l_NewObject.getSubCmd = function(){
+			l_NewObject.getSubCmd = function(){
 
-        return l_NewObject.getInt8pos(6);
-      };
+				return l_NewObject.getInt8pos(6);
+			};
 
-      l_NewObject.setSubCmd = function(p_SubCmd){
-        l_NewObject.setInt8pos(6, p_SubCmd);
-      };
+			l_NewObject.setSubCmd = function(p_SubCmd){
+				l_NewObject.setInt8pos(6, p_SubCmd);
+			};
 
-      l_NewObject.getDataLength = function(){
+			l_NewObject.getDataLength = function(){
 
-        return l_NewObject.getInt16pos(2);
-      };
+				return l_NewObject.getInt16pos(2);
+			};
 
-      l_NewObject.setDataLength = function(p_length){
-        l_NewObject.setInt16pos(2, p_length);
-      };
+			l_NewObject.setDataLength = function(p_length){
+				l_NewObject.setInt16pos(2, p_length);
+			};
 
-      l_NewObject.getType = function(){
+			l_NewObject.getType = function(){
 
-        return l_NewObject.getInt8pos(4);
-      };
+				return l_NewObject.getInt8pos(4);
+			};
 
-      l_NewObject.setType = function(p_type){
-        l_NewObject.setInt8pos(4, p_type);
-      };
+			l_NewObject.setType = function(p_type){
+				l_NewObject.setInt8pos(4, p_type);
+			};
 
-      l_NewObject.getCheck = function(){
-        var l_dataLength = l_NewObject.getDataLength();
-        return l_NewObject.getInt8pos(l_dataLength + 3);
-      };
+			l_NewObject.getCheck = function(){
+				var l_dataLength = l_NewObject.getDataLength();
+				return l_NewObject.getInt8pos(l_dataLength + 3);
+			};
 
-      l_NewObject.setCheck = function(p_check){
-        var l_dataLength = l_NewObject.getDataLength();
-        l_NewObject.setInt8pos(l_dataLength + 3, p_check);
-      };
+			l_NewObject.setCheck = function(p_check){
+				var l_dataLength = l_NewObject.getDataLength();
+				l_NewObject.setInt8pos(l_dataLength + 3, p_check);
+			};
 
-      l_NewObject.resetCheck = function(){
+			l_NewObject.resetCheck = function(){
 
-          var l_Count = new Uint8Array(1);
-          var l_dataView = new DataView(l_NewObject._buffer);
+				var l_Count = new Uint8Array(1);
+          		var l_dataView = new DataView(l_NewObject._buffer);
 
-          var l_length = l_NewObject.getDataLength() + 4 -1;
+          		var l_length = l_NewObject.getDataLength() + 4 -1;
 
-          for (var i = 0; i < l_length; i++) {
-             l_Count[0] = l_dataView.getUint8(i) + l_Count[0];
-          }
+          		for (var i = 0; i < l_length; i++) {
+             		l_Count[0] = l_dataView.getUint8(i) + l_Count[0];
+          		}
 
-          l_NewObject.setCheck(l_Count[0]);
-      };
+          		l_NewObject.setCheck(l_Count[0]);
+				
+			};
 
-      l_NewObject.getInt8pos = function(position){
+			l_NewObject.getInt8pos = function(position){
 
-        console.assert(position < l_NewObject._buffer.byteLength, "position length failed " + position +" "+ l_NewObject._buffer.byteLength);
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				return dataView.getInt8(0, littleendian);
+			};
 
-        var dataView = new DataView(l_NewObject._buffer, position);
+			l_NewObject.getInt8 = function(){
+
+				var l_value = l_NewObject.getInt8pos(l_NewObject.offset);
+				l_NewObject.offset += 1;
+				return l_value;
+			};
+
+			l_NewObject.setInt8pos = function(position, value){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				dataView.setInt8(0, value, littleendian);
+			};
+			l_NewObject.setInt8 = function(value){
+				l_NewObject.setInt8pos(l_NewObject.offset, value);
+				l_NewObject.offset += 1;
+			};
+
+			l_NewObject.getInt16pos = function(position){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				return dataView.getInt16(0, littleendian);
+			};
+			l_NewObject.getInt16 = function(){
+				var l_value = l_NewObject.getInt16pos(l_NewObject.offset);
+				l_NewObject.offset += 2;
+				return l_value;
+			};
+
+			l_NewObject.setInt16pos = function(position, value){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				dataView.setInt16(0, value, littleendian);
+			};
+			l_NewObject.setInt16 = function(value){
+				l_NewObject.setInt16pos(l_NewObject.offset, value);
+				l_NewObject.offset += 2;
+			};
+			l_NewObject.getInt32pos = function(position){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				return dataView.getInt32(0, littleendian);
+			};
+			l_NewObject.getInt32 = function(){
+				var l_value = l_NewObject.getInt32pos(l_NewObject.offset);
+				l_NewObject.offset += 4;
+				return l_value;
+			};
+
+			l_NewObject.setInt32pos = function(position, value){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				dataView.setInt32(0, value, littleendian);
+			};
+			l_NewObject.setInt32 = function(value){
+				l_NewObject.setInt32pos(l_NewObject.offset, value);
+				l_NewObject.offset += 4;
+			};
+			l_NewObject.getInt64pos = function(position){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				return dataView.getInt64(0, littleendian);
+			};
+			l_NewObject.getInt64 = function(){
+				var l_value = l_NewObject.getInt64pos(l_NewObject.offset);
+				l_NewObject.offset += 8;
+				return l_value;
+			};
+
+			l_NewObject.setInt64pos = function(position, value){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				dataView.setInt64(0, value, littleendian);
+			};
+			l_NewObject.setInt64 = function(value){
+				l_NewObject.setInt64pos(l_NewObject.offset, value);
+				l_NewObject.offset += 8;
+			};
+
+			l_NewObject.getFloat32pos = function(position){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				return dataView.getFloat32(0, littleendian);
+			};
+			l_NewObject.getFloat32 = function(){
+				var l_value = l_NewObject.getFloat32pos(l_NewObject.offset);
+				l_NewObject.offset += 4;
+				return l_value;
+			};
+
+			l_NewObject.setFloat32pos = function (position, value){
+				var dataView = new DataView(l_NewObject._buffer, position);
+				
+				dataView.setFloat32(0, value, littleendian);
+			};
+			l_NewObject.setFloat32 = function (value){
+				l_NewObject.setFloat32pos(l_NewObject.offset, value);
+				l_NewObject.offset += 4;
+			};
+
+			l_NewObject.getStringpos = function(position, length){
+
+        		var l_str = "";
+
+       	 		var dataView = new DataView(l_NewObject._buffer, position);
+
+        		for (var i = 0; i < length; i++) {
+          			l_str += String.fromCharCode( dataView.getUint8(i));
+        		}
         
-        return dataView.getInt8(0, littleendian);
-      };
+        		return l_str;
+      		};
 
-      l_NewObject.getInt8 = function(){
+			l_NewObject.getString = function(length){
 
-        var l_value = l_NewObject.getInt8pos(l_NewObject.offset);
-        l_NewObject.offset += 1;
-        return l_value;
-      };
+				var l_value = l_NewObject.getStringpos(l_NewObject.offset, length);
+				l_NewObject.offset += length;
+				return l_value;
+			};
 
-      l_NewObject.setInt8pos = function(position, value){
+			l_NewObject.setStringpos = function(position, value){
 
-        console.assert(position < l_NewObject._buffer.byteLength, "position length failed");
+        		var dataView = new DataView(l_NewObject._buffer, position);
 
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        dataView.setInt8(0, value, littleendian);
-      };
-      l_NewObject.setInt8 = function(value){
-        l_NewObject.setInt8pos(l_NewObject.offset, value);
-        l_NewObject.offset += 1;
-      };
+        		for (var i = 0; i < value.length; i++) {
+          			dataView.setInt8(i, value.charCodeAt(i) );
+        		}
+      		};
 
-      l_NewObject.getInt16pos = function(position){
+			l_NewObject.setString = function(value){
 
-        console.assert(position < l_NewObject._buffer.byteLength, "position length failed");
+				l_NewObject.setStringpos(l_NewObject.offset, value);
+				l_NewObject.offset += value.length;
+			};
 
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        return dataView.getInt16(0, littleendian);
-      };
-      l_NewObject.getInt16 = function(){
-        var l_value = l_NewObject.getInt16pos(l_NewObject.offset);
-        l_NewObject.offset += 2;
-        return l_value;
-      };
+			l_NewObject.print = function(){
 
-      l_NewObject.setInt16pos = function(position, value){
+          		var l_str = "Packet:( " + l_NewObject._buffer.byteLength + " ) \r\n";
 
-        console.assert(position < l_NewObject._buffer.byteLength, "position length failed");
+          		var l_dataView = new DataView(l_NewObject._buffer);
 
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        dataView.setInt16(0, value, littleendian);
-      };
-      l_NewObject.setInt16 = function(value){
-        l_NewObject.setInt16pos(l_NewObject.offset, value);
-        l_NewObject.offset += 2;
-      };
-      l_NewObject.getInt32pos = function(position){
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        return dataView.getInt32(0, littleendian);
-      };
-      l_NewObject.getInt32 = function(){
-        var l_value = l_NewObject.getInt32pos(l_NewObject.offset);
-        l_NewObject.offset += 4;
-        return l_value;
-      };
+          		for (var i = 0; i < l_NewObject._buffer.byteLength; i++) {
+               		l_str += " " + l_dataView.getInt8(i);
+               		if (((i + 1) % 16) === 0) {
+                  		l_str += "\r\n";
+               		}
+          		}
 
-      l_NewObject.setInt32pos = function(position, value){
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        dataView.setInt32(0, value, littleendian);
-      };
-      l_NewObject.setInt32 = function(value){
-        l_NewObject.setInt32pos(l_NewObject.offset, value);
-        l_NewObject.offset += 4;
-      };
-      l_NewObject.getInt64pos = function(position){
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        return dataView.getInt64(0, littleendian);
-      };
-      l_NewObject.getInt64 = function(){
-        var l_value = l_NewObject.getInt64pos(l_NewObject.offset);
-        l_NewObject.offset += 8;
-        return l_value;
-      };
+          		return l_str;
+      		};
 
-      l_NewObject.setInt64pos = function(position, value){
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        dataView.setInt64(0, value, littleendian);
-      };
-      l_NewObject.setInt64 = function(value){
-        l_NewObject.setInt64pos(l_NewObject.offset, value);
-        l_NewObject.offset += 8;
-      };
+			console.log("l_NewObject _buffer ");
 
-      l_NewObject.getFloat32pos = function(position){
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        return dataView.getFloat32(0, littleendian);
-      };
-      l_NewObject.getFloat32 = function(){
-        var l_value = l_NewObject.getFloat32pos(l_NewObject.offset);
-        l_NewObject.offset += 4;
-        return l_value;
-      };
+			l_NewObject._buffer = null;
 
-      l_NewObject.setFloat32pos = function (position, value){
-        var dataView = new DataView(l_NewObject._buffer, position);
-        
-        dataView.setFloat32(0, value, littleendian);
-      };
-      l_NewObject.setFloat32 = function (value){
-        l_NewObject.setFloat32pos(l_NewObject.offset, value);
-        l_NewObject.offset += 4;
-      };
+			if (p_buffer === null) {
 
-      l_NewObject.getStringpos = function(position, length){
+				l_NewObject._buffer = new ArrayBuffer(p_length + 12);
+				l_NewObject.setInt8pos(0, 0xAA);
+				l_NewObject.setInt8pos(1, 0x55);
+				l_NewObject.setInt16pos(2, p_length + 8);
+				l_NewObject.setInt8pos(4, 0x02);	//M
+				l_NewObject.setInt16pos(5, 0x0);	//数据包命令ID
+				l_NewObject.setInt32pos(7, 0x0); //保留数据
 
-        var l_str = "";
+			} else {
 
-        var dataView = new DataView(l_NewObject._buffer, position);
+				l_NewObject._buffer = p_buffer;
+			}
+			
+			l_NewObject.offset = 11; //定位到 数据位
 
-        for (var i = 0; i < length; i++) {
-          l_str += String.fromCharCode( dataView.getUint8(i));
-        }
-        
-        return l_str;
-      };
+			console.log("return l_NewObject ");
 
-      l_NewObject.getString = function(length){
-
-        var l_value = l_NewObject.getStringpos(l_NewObject.offset, length);
-        l_NewObject.offset += length;
-        return l_value;
-      };
-
-      l_NewObject.setStringpos = function(position, value){
-
-        var dataView = new DataView(l_NewObject._buffer, position);
-
-        for (var i = 0; i < value.length; i++) {
-          dataView.setInt8(i, value.charCodeAt(i) );
-        }
-      };
-
-      l_NewObject.setString = function(value){
-
-        l_NewObject.setStringpos(l_NewObject.offset, value);
-        l_NewObject.offset += value.length;
-      };
-
-      l_NewObject.print = function(){
-
-          var l_str = "Packet:( " + l_NewObject._buffer.byteLength + " ) \r\n";
-
-          var l_dataView = new DataView(l_NewObject._buffer);
-
-          for (var i = 0; i < l_NewObject._buffer.byteLength; i++) {
-               l_str += " " + l_dataView.getInt8(i);
-               if (((i + 1) % 16) === 0) {
-                  l_str += "\r\n";
-               }
-          }
-
-          return l_str;
-      };
-
-      
-
-      l_NewObject._buffer = null;
-
-      if (p_buffer === null) {
-
-        l_NewObject._buffer = new ArrayBuffer(p_length + 12);
-        l_NewObject.setInt8pos(0, 0xAA);
-        l_NewObject.setInt8pos(1, 0x55);
-        l_NewObject.setInt16pos(2, p_length + 8);
-        l_NewObject.setInt8pos(4, 0x01);  //C
-        l_NewObject.setInt16pos(5, 0x0);  //数据包命令ID
-        l_NewObject.setInt32pos(7, 0x0); //保留数据
-
-      } else {
-
-        l_NewObject._buffer = p_buffer;
-
-      }
-      
-      l_NewObject.offset = 11; //定位到 数据位
-
-      return l_NewObject;
-
-      };
+			return l_NewObject;
+		}
 	};
 
 
