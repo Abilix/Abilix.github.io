@@ -253,6 +253,117 @@
 		}
 	};
 
+	function AppProxy(){
+
+		self = this;
+
+		var m_TimeoutHandle = null;
+		var m_callback = null;
+		var m_port = null;
+		var m_KeeperCount = 0;
+
+		self.isConnected = false;
+
+		function isNull(p_object){
+            return typeof(p_object) === "undefined" || p_object === null;
+        }
+
+		self.setCallback = function(p_callback){
+			m_callback = p_callback;
+		};
+
+		function Request(p_name)
+		{
+     		new RegExp("(^|&)"+p_name+"=([^&]*)").exec(window.location.search.substr(1));
+     		return RegExp.$2;
+		}
+
+		var AppID = Request("id");
+
+		function onMessage(p_Msg){
+
+			if (p_Msg.event === "KEEPER__") {
+
+				self.isConnected = true;
+
+				m_KeeperCount--;
+
+				if (m_KeeperCount < 0) {
+					m_KeeperCount = 0;
+				}
+
+			} else {
+
+				if (m_callback !== null) {
+						m_callback(p_Msg);
+					}
+			}
+		}
+
+		function connect(){
+
+			self.isConnected = false;
+
+			var l_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
+
+			console.log("port " + l_port.name);
+
+			setListener();
+
+			m_TimeoutHandle = setInterval(KeeperTimeoutHandle, 500);
+			m_KeeperCount = 0;
+		}
+
+  		function onDisconnect(){
+
+      		console.log(" onDisconnect ");
+
+      		connect();
+  		}
+
+  		function setListener(){
+
+  			l_port.onMessage.addListener(onMessage);
+  			l_port.onDisconnect.addListener(onDisconnect);
+
+  			console.log(" set port Listener success " + l_port.name);
+  		}
+
+		self.start = function(){
+
+			connect();
+		};
+
+		self.postMessage = function(p_Message){
+			m_port.postMessage(p_Message);
+		};
+
+		function KeeperTimeoutHandle(){
+
+			self.postMessage({event: "KEEPER__"});
+
+			m_KeeperCount++;
+
+			if (m_KeeperCount > 10) {
+				l_port.disconnect();
+				self.stop();
+
+				connect();
+			}
+
+		}
+
+		self.stop = function(){
+
+			if (!isNull(m_TimeoutHandle)) {
+				window.clearInterval(m_TimeoutHandle);
+              	m_TimeoutHandle = null;
+			}
+		};
+
+	}
+
+	
 
 	var status = false;
 	var _callbacks = {};
@@ -347,18 +458,6 @@
 		"TurnRight" : 3
 	};
 
-	function Request(p_name)
-	{
-     	new RegExp("(^|&)"+p_name+"=([^&]*)").exec(window.location.search.substr(1));
-     	return RegExp.$2;
-	}
-
-	var AppID = Request("id");
-
-	var l_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
-
-	console.log("port " + l_port.name);
-
 	function onMessage(p_Msg){
 
 		if (p_Msg.event == "CALLBACK__") {
@@ -366,37 +465,14 @@
 		}
 	}
 
-  	function onDisconnect(){
+  	var l_appProxy = new AppProxy();
 
-      	console.log(" onDisconnect ");
-
-      	l_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
-
-      	if (l_port === null) {
-
-      		console.log(" runtime.connect fail ");
-      		return;
-      	}
-
-      	setListener();
-
-  	}
-
-  	function setListener(){
-
-  		l_port.onMessage.addListener(onMessage);
-  		l_port.onDisconnect.addListener(onDisconnect);
-
-  		console.log(" set port Listener success " + l_port.name);
-  	}
-
-  	setListener();
+  	l_appProxy.setCallback(onMessage);
 
 	function postMessage(p_Message){
 
-		l_port.postMessage(p_Message);
+		l_appProxy.postMessage(p_Message);
 
-		console.log("postMessage " + l_port.name);
 	}
 
 	function scratchCommand(p_packet, p_SessionId, p_callback){
