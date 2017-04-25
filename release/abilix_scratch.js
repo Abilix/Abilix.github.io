@@ -345,7 +345,7 @@
 			m_KeeperCount++;
 
 			if (m_KeeperCount > 10) {
-				l_port.disconnect();
+				m_port.disconnect();
 				self.stop();
 
 				connect();
