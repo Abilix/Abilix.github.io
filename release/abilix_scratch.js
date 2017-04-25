@@ -363,9 +363,6 @@
 
 	}
 
-	
-
-	var status = false;
 	var _callbacks = {};
 
 	var moterPortLabels = {
@@ -468,6 +465,7 @@
   	var l_appProxy = new AppProxy();
 
   	l_appProxy.setCallback(onMessage);
+  	l_appProxy.start();
 
 	function postMessage(p_Message){
 
@@ -487,21 +485,22 @@
 	}
 
 	ext._getStatus = function() {
-        return status?{status: 2, msg: 'Ready'}:{status: 1, msg: 'Not Ready'};
+
+        return l_appProxy.isConnected ?{status: 2, msg: 'Ready'}:{status: 1, msg: 'Not Ready'};
     };
 	ext._deviceConnected = function(dev) {
 	    
 	    console.log("_deviceConnected");
 	    
-	    status = true;
+	    
 	};
 	ext._deviceRemoved = function(dev) {
 	    console.log("_deviceRemoved");
-	    status = false;
+	    
 	};
 	ext._shutdown = function() {
 	    console.log("_shutdown");
-	    status = false;
+	    
 	};
 	
     ext.sessionId = 0;
