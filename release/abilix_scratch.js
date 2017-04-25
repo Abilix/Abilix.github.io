@@ -304,9 +304,9 @@
 
 			self.isConnected = false;
 
-			var l_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
+			m_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
 
-			console.log("port " + l_port.name);
+			console.log("port " + m_port.name);
 
 			setListener();
 
@@ -323,10 +323,10 @@
 
   		function setListener(){
 
-  			l_port.onMessage.addListener(onMessage);
-  			l_port.onDisconnect.addListener(onDisconnect);
+  			m_port.onMessage.addListener(onMessage);
+  			m_port.onDisconnect.addListener(onDisconnect);
 
-  			console.log(" set port Listener success " + l_port.name);
+  			console.log(" set port Listener success " + m_port.name);
   		}
 
 		self.start = function(){
