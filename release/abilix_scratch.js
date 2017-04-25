@@ -317,7 +317,7 @@
   		function onDisconnect(){
 
       		console.log(" onDisconnect ");
-
+      		self.stop();
       		connect();
   		}
 
@@ -341,6 +341,8 @@
 		function KeeperTimeoutHandle(){
 
 			self.postMessage({event: "KEEPER__"});
+
+			console.log(" KeeperTimeoutHandle ");
 
 			m_KeeperCount++;
 
