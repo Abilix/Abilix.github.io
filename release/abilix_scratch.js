@@ -6,7 +6,7 @@
 
 			var l_NewObject = {};
 
-			var littleendian = true;
+			var littleendian = false;
 
 			l_NewObject.getMasterCmd = function(){
 
