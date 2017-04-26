@@ -236,7 +236,7 @@
 				l_NewObject.setInt8pos(0, 0xAA);
 				l_NewObject.setInt8pos(1, 0x55);
 				l_NewObject.setInt16pos(2, p_length + 8);
-				l_NewObject.setInt8pos(4, 0x02);	//M
+				l_NewObject.setInt8pos(4, 0x01);	//C
 				l_NewObject.setInt16pos(5, 0x0);	//数据包命令ID
 				l_NewObject.setInt32pos(7, 0x0); //保留数据
 
