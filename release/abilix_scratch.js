@@ -475,13 +475,24 @@
 
 	}
 
+	function ArrayBufferToArray(p_buffer){
+		var l_array = [];
+		DataView l_dataview = new DataView(p_buffer);
+
+		for (var i = 0; i < p_buffer.byteLength; i++) {
+			l_array[i] = l_dataview.getUint8(i);
+		}
+
+		return l_array;
+	}
+
 	function scratchCommand(p_packet, p_SessionId, p_callback){
 
 		if (p_SessionId !== null && p_callback !== null) {
 			_callbacks["callback_"+p_SessionId] = p_callback;
 		}
 		
-		postMessage({event: "COMMAND__", data: p_packet});
+		postMessage({event: "COMMAND__", data: ArrayBufferToArray( p_packet._buffer)});
 
 		console.log("scratchCommand end" );
 	}
