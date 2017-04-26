@@ -477,7 +477,7 @@
 
 	function ArrayBufferToArray(p_buffer){
 		var l_array = [];
-		DataView l_dataview = new DataView(p_buffer);
+		var l_dataview = new DataView(p_buffer);
 
 		for (var i = 0; i < p_buffer.byteLength; i++) {
 			l_array[i] = l_dataview.getUint8(i);
