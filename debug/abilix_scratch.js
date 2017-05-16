@@ -6,6 +6,8 @@
 
 			var l_NewObject = {};
 
+			var littleendian = false;
+
 			l_NewObject.getMasterCmd = function(){
 
 				return l_NewObject.getInt8pos(5);
@@ -49,17 +51,18 @@
 
 			l_NewObject.setCheck = function(p_check){
 				var l_dataLength = l_NewObject.getDataLength();
-				l_NewObject.setInt8pos(l_dataLength + 3, p_type);
+				l_NewObject.setInt8pos(l_dataLength + 3, p_check);
 			};
 
 			l_NewObject.resetCheck = function(){
 
 				var l_Count = new Uint8Array(1);
+          		var l_dataView = new DataView(l_NewObject._buffer);
 
           		var l_length = l_NewObject.getDataLength() + 4 -1;
 
           		for (var i = 0; i < l_length; i++) {
-             		l_Count[0] = l_NewObject._buffer[i] + l_Count[0];
+             		l_Count[0] = l_dataView.getUint8(i) + l_Count[0];
           		}
 
           		l_NewObject.setCheck(l_Count[0]);
@@ -174,14 +177,16 @@
 
 			l_NewObject.getStringpos = function(position, length){
 
-				var l_str = "";
+        		var l_str = "";
 
-				for (var i = 0; i < length; i++) {
-					l_str += l_NewObject._buffer[position + i];
-				}
-				
-				return l_str;
-			};
+       	 		var dataView = new DataView(l_NewObject._buffer, position);
+
+        		for (var i = 0; i < length; i++) {
+          			l_str += String.fromCharCode( dataView.getUint8(i));
+        		}
+        
+        		return l_str;
+      		};
 
 			l_NewObject.getString = function(length){
 
@@ -192,19 +197,36 @@
 
 			l_NewObject.setStringpos = function(position, value){
 
-				for (var i = 0; i < value.length; i++) {
-					l_NewObject._buffer[position + i] = value[i];
-				}
-			};
+        		var dataView = new DataView(l_NewObject._buffer, position);
+
+        		for (var i = 0; i < value.length; i++) {
+          			dataView.setInt8(i, value.charCodeAt(i) );
+        		}
+      		};
+
 			l_NewObject.setString = function(value){
 
 				l_NewObject.setStringpos(l_NewObject.offset, value);
 				l_NewObject.offset += value.length;
 			};
 
-			var littleendian = true;
+			l_NewObject.print = function(){
 
-			
+          		var l_str = "Packet:( " + l_NewObject._buffer.byteLength + " ) \r\n";
+
+          		var l_dataView = new DataView(l_NewObject._buffer);
+
+          		for (var i = 0; i < l_NewObject._buffer.byteLength; i++) {
+               		l_str += " " + l_dataView.getInt8(i);
+               		if (((i + 1) % 16) === 0) {
+                  		l_str += "\r\n";
+               		}
+          		}
+
+          		return l_str;
+      		};
+
+			console.log("l_NewObject _buffer ");
 
 			l_NewObject._buffer = null;
 
@@ -214,7 +236,7 @@
 				l_NewObject.setInt8pos(0, 0xAA);
 				l_NewObject.setInt8pos(1, 0x55);
 				l_NewObject.setInt16pos(2, p_length + 8);
-				l_NewObject.setInt8pos(4, 0x02);	//M
+				l_NewObject.setInt8pos(4, 0x01);	//C
 				l_NewObject.setInt16pos(5, 0x0);	//数据包命令ID
 				l_NewObject.setInt32pos(7, 0x0); //保留数据
 
@@ -225,24 +247,137 @@
 			
 			l_NewObject.offset = 11; //定位到 数据位
 
+			console.log("return l_NewObject ");
+
 			return l_NewObject;
 		}
 	};
 
+	function AppProxy(){
 
-	var status = false;
+		self = this;
+
+		var m_TimeoutHandle = null;
+		var m_callback = null;
+		var m_port = null;
+		var m_KeeperCount = 0;
+
+		self.isConnected = false;
+
+		function isNull(p_object){
+            return typeof(p_object) === "undefined" || p_object === null;
+        }
+
+		self.setCallback = function(p_callback){
+			m_callback = p_callback;
+		};
+
+		function Request(p_name)
+		{
+     		new RegExp("(^|&)"+p_name+"=([^&]*)").exec(window.location.search.substr(1));
+     		return RegExp.$2;
+		}
+
+		var AppID = Request("id");
+
+		function onMessage(p_Msg){
+
+			if (p_Msg.event === "KEEPER__") {
+
+				self.isConnected = true;
+
+				m_KeeperCount--;
+
+				if (m_KeeperCount < 0) {
+					m_KeeperCount = 0;
+				}
+
+			} else {
+
+				if (m_callback !== null) {
+						m_callback(p_Msg);
+					}
+			}
+		}
+
+		function connect(){
+
+			self.isConnected = false;
+
+			m_port = chrome.runtime.connect(AppID, {name:"abilix_scratch"});
+
+			console.log("port " + m_port.name);
+
+			setListener();
+
+			m_TimeoutHandle = setInterval(KeeperTimeoutHandle, 500);
+			m_KeeperCount = 0;
+		}
+
+  		function onDisconnect(){
+
+      		console.log(" onDisconnect ");
+      		self.stop();
+      		connect();
+  		}
+
+  		function setListener(){
+
+  			m_port.onMessage.addListener(onMessage);
+  			m_port.onDisconnect.addListener(onDisconnect);
+
+  			console.log(" set port Listener success " + m_port.name);
+  		}
+
+		self.start = function(){
+
+			connect();
+		};
+
+		self.postMessage = function(p_Message){
+			m_port.postMessage(p_Message);
+		};
+
+		function KeeperTimeoutHandle(){
+
+			self.postMessage({event: "KEEPER__"});
+
+			console.log(" KeeperTimeoutHandle ");
+
+			m_KeeperCount++;
+
+			if (m_KeeperCount > 10) {
+				m_port.disconnect();
+				self.stop();
+
+				connect();
+			}
+
+		}
+
+		self.stop = function(){
+
+			if (!isNull(m_TimeoutHandle)) {
+				window.clearInterval(m_TimeoutHandle);
+              	m_TimeoutHandle = null;
+			}
+		};
+
+	}
+
 	var _callbacks = {};
 
-	var portLabels = {
+	var moterPortLabels = {
         "A": 0,
         "B": 1,
         "C": 2,
         "D": 3,
     };
 
+    // 
     var directionLabels = {
-    	"RotateForward" = 0,
-    	"RotateBackward" = 1
+    	"RotateForward" : 0,
+    	"RotateBackward" : 1
     };
 
     var speakerLabels = {
@@ -322,11 +457,6 @@
 		"TurnRight" : 3
 	};
 
-	// AppID:kdfnjcilpbphbadkncegkbnokgjinbnn
-	var l_port = chrome.runtime.connect("kdfnjcilpbphbadkncegkbnokgjinbnn", {name:"abilix_scratch"});
-
-	console.log("port " + l_port.name);
-
 	function onMessage(p_Msg){
 
 		if (p_Msg.event == "CALLBACK__") {
@@ -334,38 +464,56 @@
 		}
 	}
 
-	l_port.onMessage.addListener(onMessage);
+  	var l_appProxy = new AppProxy();
+
+  	l_appProxy.setCallback(onMessage);
+  	l_appProxy.start();
 
 	function postMessage(p_Message){
 
-		l_port.postMessage(p_Message);
+		l_appProxy.postMessage(p_Message);
+
 	}
 
-	function scratchCommand(p_buffer, p_SessionId, p_callback){
+	function ArrayBufferToArray(p_buffer){
+		var l_array = [];
+		var l_dataview = new DataView(p_buffer);
 
-		if (p_SessionId != null && p_callback != null) {
+		for (var i = 0; i < p_buffer.byteLength; i++) {
+			l_array[i] = l_dataview.getUint8(i);
+		}
+
+		return l_array;
+	}
+
+	function scratchCommand(p_packet, p_SessionId, p_callback){
+
+		if (p_SessionId !== null && p_callback !== null) {
 			_callbacks["callback_"+p_SessionId] = p_callback;
 		}
 		
-		postMessage({event: "COMMAND__", data: p_buffer});
+		postMessage({event: "COMMAND__", data: ArrayBufferToArray( p_packet._buffer)});
+
+		console.log("scratchCommand end" );
 	}
 
 	ext._getStatus = function() {
-        return status?{status: 2, msg: 'Ready'}:{status: 1, msg: 'Not Ready'};
+
+        return l_appProxy.isConnected ?{status: 2, msg: 'Ready'}:{status: 1, msg: 'Not Ready'};
     };
 	ext._deviceConnected = function(dev) {
 	    
 	    console.log("_deviceConnected");
 	    
-	    status = true;
+	    
 	};
 	ext._deviceRemoved = function(dev) {
 	    console.log("_deviceRemoved");
-	    status = false;
+	    
 	};
 	ext._shutdown = function() {
 	    console.log("_shutdown");
-	    status = false;
+	    
 	};
 	
     ext.sessionId = 0;
@@ -387,17 +535,22 @@
     	console.log("openMotor " + port + " " + direction +" " + speed);
 
     	var l_packet = Packet.createNew(null, 16);
+
+    	console.log("openMotor createNew end ");
+
     	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x01);
 
     	l_packet.setInt32(genNextID());
-    	l_packet.setInt32(portLabels[port]);
+    	l_packet.setInt32(moterPortLabels[port]);
     	l_packet.setInt32(directionLabels[direction]);
     	l_packet.setInt32(speed);
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
+
+    	console.log("openMotor end ");
 
     };
 
@@ -413,7 +566,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
     }
 
     ext.openSpeakerHi = function(param){
@@ -460,7 +613,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 
 	};
 
@@ -477,7 +630,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 
 	ext.DisplayPhoto = function(photoId){
@@ -493,7 +646,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 	ext.CloseDevice = function(deviceId){
 
@@ -507,7 +660,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 
 	ext.getUltrasonicForObstacles = function(portId, p_callback){
@@ -524,7 +677,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 
 	ext.getUltrasonicForDistance = function(portId, p_callback){
@@ -540,7 +693,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 
 	ext.getTouchSomething = function(portId, p_callback){
@@ -557,7 +710,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 	ext.getColorValue = function(portId, p_color, p_callback){
 
@@ -574,7 +727,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 	ext.getGrayscaleValue = function(portId, p_callback){
 
@@ -590,7 +743,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer, l_sessionId, p_callback);
+    	scratchCommand(l_packet, l_sessionId, p_callback);
 	};
 	ext.takePhoto = function(portId){
 
@@ -606,7 +759,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 	ext.clockReset = function(){
 
@@ -621,7 +774,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 		
 	};
 	ext.getSystemTimeValue = function(p_callback){
@@ -637,7 +790,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 		
 	};
 	ext.calibrateCompass = function(){
@@ -653,7 +806,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 		
 	};
 	ext.getCompassValue = function(p_callback){
@@ -669,7 +822,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 	ext.getGyroscopeValue = function(dircetion, p_callback){
 
@@ -685,7 +838,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 
 	ext.microphoneRecode = function(portId, time){
@@ -703,7 +856,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet._buffer);
+    	scratchCommand(l_packet);
 	};
 
 	  // Check for GET param 'lang'
@@ -827,7 +980,7 @@
 		blocks : blocks[lang],
 		menus : menus[lang],
 		url : 'http://Abilix.github.io/abilix_scratch.js'
-	}
+	};
 
 	ScratchExtensions.register('Abilix', descriptor, ext);
 })({});
