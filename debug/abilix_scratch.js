@@ -680,8 +680,6 @@
 
     	var l_packet = Packet.createNew(null, 16);
 
-    	console.log("openMotor createNew end ");
-
     	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x01);
 
@@ -694,7 +692,7 @@
 
     	scratchCommand(l_packet);
 
-    	console.log("openMotor end ");
+    	console.log("openMotor end " + direction + " " + directionLabels[direction]);
 
     };
 
@@ -715,38 +713,38 @@
 
     ext.openSpeakerHi = function(param){
 
-    	console.log("openSpeakerHi");
+    	console.log("openSpeakerHi " + param + " " + speakerLabels[param]);
 
     	openSpeaker(0, speakerLabels[param]);
 
     };
     ext.openSpeakerExpression = function(param){
-    	console.log("openSpeakerExpression");
+    	console.log("openSpeakerExpression " + param + " " + speakerLabels[param]);
     	
     	openSpeaker(1, speakerLabels[param]);
     };
     ext.openSpeakerAction = function(param){
 
-    	console.log("openSpeakerAction");
+    	console.log("openSpeakerAction "+ param + " " + speakerLabels[param]);
 
     	openSpeaker(2, speakerLabels[param]);
     };
 	ext.openSpeakerAnimal = function(param){
 
-		console.log("openSpeakerAnimal");
+		console.log("openSpeakerAnimal "+ param + " " + speakerLabels[param]);
     	openSpeaker(3, speakerLabels[param]);
 	};
 	ext.openSpeakerPiano = function(param){
-		console.log("openSpeakerPiano");
+		console.log("openSpeakerPiano "+ param + " " + speakerLabels[param]);
     	openSpeaker(4, speakerLabels[param]);
 	};
 	ext.openSpeakerRecord = function(param){
-		console.log("openSpeakerRecord");
+		console.log("openSpeakerRecord "+ param + " " + speakerLabels[param]);
     	openSpeaker(5, speakerLabels[param]);
 	};
 	ext.openLED = function(color){
 
-		console.log("openLED");
+		console.log("openLED "+ color + " " + ledColorLabels[color]);
     	
     	var l_packet = Packet.createNew(null, 8);
     	l_packet.setMasterCmd(0x0A);
@@ -794,7 +792,7 @@
 	};
 	ext.CloseDevice = function(deviceId){
 
-		console.log("CloseDevice");
+		console.log("CloseDevice "+ deviceId + " " + deviceLabels[deviceId]);
     	var l_packet = Packet.createNew(null, 8);
     	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x05);
@@ -809,7 +807,7 @@
 
 	ext.getUltrasonicForObstacles = function(portId, p_callback){
 
-		console.log("getUltrasonicForObstacles");
+		console.log("getUltrasonicForObstacles " + portId + " " + portLabels[portId]);
 
     	var l_packet = Packet.createNew(null, 8);
     	l_packet.setMasterCmd(0x0A);
@@ -858,7 +856,7 @@
 	};
 	ext.getColorValue = function(portId, p_color, p_callback){
 
-		console.log("getColorValue");
+		console.log("getColorValue "  + p_color + " " + colorLabels[p_color]);
     	
     	var l_packet = Packet.createNew(null, 12);
     	l_packet.setMasterCmd(0x0A);
@@ -970,7 +968,7 @@
 	};
 	ext.getGyroscopeValue = function(dircetion, p_callback){
 
-		console.log("getGyroscopeValue");
+		console.log("getGyroscopeValue " + dircetion + " " + gyroDirectionLables[dircetion] );
     	
     	var l_packet = Packet.createNew(null, 8);
     	l_packet.setMasterCmd(0x0A);
@@ -1084,7 +1082,7 @@
 
 			],
 		zh: [
-				[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "RotateForward" , "30"],
+				[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
 				[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
 				[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
@@ -1116,8 +1114,8 @@
 			],
 			//阿拉伯语
 			ar: [
-				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "RotateForward" , "30"],
-				[" ", "شغل المحرك %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "استدر  الى الامام" , "30"],
+				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
+				[" ", "شغل المحرك %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "استدر  الى الامام" , "30"],
 
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "قل %m.speakerParam1_0 ","openSpeakerHi", "مرحبا"],
@@ -1192,8 +1190,8 @@
 			],
 			//希伯拉语
 			he: [
-				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "RotateForward" , "30"],
-				[" ", "הפעל מנוע %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "הסתובב קדימה" , "30"],
+				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
+				[" ", "הפעל מנוע %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "הסתובב קדימה" , "30"],
 
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "אמור %m.speakerParam1_0 ","openSpeakerHi", "שלום"],
