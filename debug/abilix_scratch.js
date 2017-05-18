@@ -1395,6 +1395,11 @@
 
 	var lang = getLanguage();
 
+	if ( !(lang in menus) ) {
+		
+		lang = "en";
+	}
+
   	var descriptor = {
 
 		blocks : blocks[lang],
