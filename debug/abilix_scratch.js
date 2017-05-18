@@ -1003,11 +1003,31 @@
     	scratchCommand(l_packet);
 	};
 
+	function getSearchLanguage(){
+
+		var paramString = window.location.search.replace(/^\?|\/$/g, '');
+	  	var vars = paramString.split("&");
+	  	var lang = "";
+	  	for (var i=0; i<vars.length; i++) {
+	    	var pair = vars[i].split('=');
+	    	if (pair.length > 1 && pair[0]=='lang')
+	      		lang = pair[1];
+	  	}
+
+	  	return lang;
+	}
+
 	function getLanguage(){
 
-	  	var lang = navigator.browserLanguage ? navigator.browserLanguage : navigator.language; 
+	  	var lang = getSearchLanguage();
 
 	  	console.log("getLanguage 1: " + lang);
+
+	  	if (lang.length === 0) {
+	  		lang = navigator.browserLanguage ? navigator.browserLanguage : navigator.language; 
+	  	}
+
+	  	console.log("getLanguage 2: " + lang);
 	  	
 	  	if (lang.length === 0) {
 	  		lang = "en";
@@ -1020,7 +1040,7 @@
 	  		lang = l_array[0];
 	  	}
 	  	
-	  	console.log("getLanguage 2: " + lang);
+	  	console.log("getLanguage 3: " + lang);
 
 	  	return lang.toLowerCase();
 	  	
