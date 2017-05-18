@@ -532,7 +532,7 @@
 		"Motor" 	: 0,
 		"Speaker" 	: 1,
 		"LED" 		: 2,
-		"Display" 	: 3
+		"Display" 	: 3,
 
 		//阿拉伯语
 		"محرك" 		: 0,
