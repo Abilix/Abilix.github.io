@@ -1092,7 +1092,7 @@
 				[" ", "Start LED %m.ledParam","openLED", "Red"],
 				[" ", "Display Character %s","DisplayString", ""],
 				[" ", "Display Photo %m.displayParam1_1","DisplayPhoto", "1"],
-				[" ", "Close %m.closeParam","DisplayPhoto", "Motor"],
+				[" ", "Close %m.closeParam","CloseDevice", "Motor"],
 
 				["-"],
 
@@ -1145,8 +1145,8 @@
 				//[" ", "Display Photo %m.displayParam1_1","DisplayPhoto", "1"],
 				[" ", "عرض الصورة %m.displayParam1_1","DisplayPhoto", "1"],
 
-				//[" ", "Close %m.closeParam","DisplayPhoto", "Motor"],
-				[" ", "توقف %m.closeParam","DisplayPhoto", "محرك"],
+				//[" ", "Close %m.closeParam","CloseDevice", "Motor"],
+				[" ", "توقف %m.closeParam","CloseDevice", "محرك"],
 
 				["-"],
 
@@ -1221,8 +1221,8 @@
 				//[" ", "Display Photo %m.displayParam1_1","DisplayPhoto", "1"],
 				[" ", "הצג תמונה %m.displayParam1_1","DisplayPhoto", "1"],
 
-				//[" ", "Close %m.closeParam","DisplayPhoto", "Motor"],
-				[" ", "הפסק %m.closeParam","DisplayPhoto", "מנוע"],
+				//[" ", "Close %m.closeParam","CloseDevice", "Motor"],
+				[" ", "הפסק %m.closeParam","CloseDevice", "מנוע"],
 
 				["-"],
 
