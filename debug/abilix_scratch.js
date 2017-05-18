@@ -253,6 +253,10 @@
 		}
 	};
 
+/*******************************************************************************************************************/
+/*                                                                                                                 */
+/*******************************************************************************************************************/
+
 	function AppProxy(){
 
 		self = this;
@@ -365,6 +369,10 @@
 
 	}
 
+/*******************************************************************************************************************/
+/*                                                                                                                 */
+/*******************************************************************************************************************/
+
 	var _callbacks = {};
 
 	var moterPortLabels = {
@@ -376,43 +384,53 @@
 
     // 
     var directionLabels = {
-    	"RotateForward" : 0,
-    	"RotateBackward" : 1
+    	"RotateForward" 	: 0,
+    	"RotateBackward" 	: 1,
+    	//阿拉伯语
+    	"استدر  الى الامام"		: 0,
+    	"استدر الى الوراء"		: 1,
+    	//希伯拉语
+    	"הסתובב קדימה"	: 0,
+    	"הסתובב אחורה"	: 1,
     };
 
     var speakerLabels = {
-		"Hello": 0,
-		"Bye": 1,
-		"Oppose": 2,
-		"Welcome" : 3,
+		"Hello"		: 0,
+		"Bye"		: 1,
+		"Oppose"	: 2,
+		"Welcome" 	: 3,
 		"Lookafter" : 4,
-		"Angry" : 0,
-		"Arrogant" : 1,
-		"Cry" : 2,
-		"Excited" : 3,
-		"Frightened" : 4,
-		"Aggrieved" : 5,
-		"Happy" : 6,
-		"Lovely" : 7,
-		"Laugh" : 8,
-		"Sad" : 9,
-		"Mad" : 10,
-		"Cheeky" : 11,
+
+		"Angry" 		: 0,
+		"Arrogant" 		: 1,
+		"Cry" 			: 2,
+		"Excited" 		: 3,
+		"Frightened" 	: 4,
+		"Aggrieved" 	: 5,
+		"Happy" 		: 6,
+		"Lovely" 		: 7,
+		"Laugh" 		: 8,
+		"Sad" 			: 9,
+		"Mad" 			: 10,
+		"Cheeky" 		: 11,
+
 		"Shivering" : 0,
-		"Cute" : 1,
-		"Approval": 2,
-		"Hug" : 3,
-		"Yawn" : 4,
-		"Go" : 5,
-		"Sleep" : 6,
-		"Relax" : 7,
-		"Sneak" : 8,
-		"Cow" : 0,
-		"Tiger" : 1,
-		"Dolphin" : 2,
-		"Cricket" : 3,
-		"Duckuse" : 4,
-		"Gnat" : 5,
+		"Cute" 		: 1,
+		"Approval"	: 2,
+		"Hug" 		: 3,
+		"Yawn" 		: 4,
+		"Go" 		: 5,
+		"Sleep" 	: 6,
+		"Relax" 	: 7,
+		"Sneak" 	: 8,
+
+		"Cow" 		: 0,
+		"Tiger" 	: 1,
+		"Dolphin" 	: 2,
+		"Cricket" 	: 3,
+		"Duckuse" 	: 4,
+		"Gnat" 		: 5,
+
 		"1" : 0,
 		"2" : 1,
 		"3" : 2,
@@ -420,18 +438,112 @@
 		"5" : 4,
 		"6" : 5,
 		"7" : 6,
-		"8" : 7
+		"8" : 7,
+		//阿拉伯语
+		"مرحبا" 			: 0,
+		"مع السلامه" 		: 1,
+		"اسف" 				: 2,
+		"اهلا\" وسهلا\"" 	: 3,
+		"انتبه الى" 		: 4,
+
+		"غضب" 		: 0,
+		"متغطرس" 	: 1,
+		"بكاء" 		: 2,
+		"منفعل" 	: 3,
+		"خائف" 		: 4,
+		"يضايق" 	: 5,
+		"سعيد" 		: 6,
+		"ممتاز" 	: 7,
+		"يضحك" 		: 8,
+		"حزين" 		: 9,
+		"غاضب " 	: 10,
+		"وقح" 		: 11,
+
+		"يرجف" 		: 0,
+		"ظريف" 		: 1,
+		"مأيد" 		: 2,
+		"عناق" 		: 3,
+		"تثاءب" 	: 4,
+		"تحرك" 		: 5,
+		"نائم" 		: 6,
+		"استرخاء" 	: 7,
+		"تسلل" 		: 8,
+
+		"بقرة" 	: 0,
+		"نمر" 	: 1,
+		"دلفين" : 2,
+		"صرصور" : 3,
+		"بط" 	: 4,
+		"بعوض" 	: 5,
+
+		//希伯拉语
+		"שלום" 		: 0,
+		"ביי" 		: 1,
+		"אופס !" 	: 2,
+		"ברוך הבא" 	: 3,
+		"תדאג ל" 	: 4,
+
+		"כועס" 	: 0,
+		"שחצן" 	: 1,
+		"בוכה" 	: 2,
+		"נרגש" 	: 3,
+		"מפחד" 	: 4,
+		"מציק" 	: 5,
+		"שמח" 	: 6,
+		"יופי" 	: 7,
+		"צוחק" 	: 8,
+		"עצוב" 	: 9,
+		"עצבני" 	: 10,
+		"חצוף" 	: 11,
+
+		"רועד" 		: 0,
+		"חמוד" 		: 1,
+		"מסכים" 		: 2,
+		"חיבוק" 		: 3,
+		"פהוק" 		: 4,
+		"זוז" 		: 5,
+		"יושן" 		: 6,
+		"להרגע" 		: 7,
+		"להתגנב" 	: 8,
+
+		"פרה" 		: 0, 
+		"נמר" 		: 1,
+		"דולפין" 		: 2,
+		"גוק" 		: 3,
+		"ברווז" 		: 4,
+		"יַתוּש" 	: 5,
 	};
 	var ledColorLabels = {
-		"Red" : 0,
+		"Red" 	: 0,
 		"Green" : 1,
-		"Blue" : 2
+		"Blue" 	: 2,
+
+		//阿拉伯语
+		"أحمر" : 0,
+		"أخضر" : 1,
+		"أزرق" : 2,
+
+		//希伯拉语
+		"אדום" 	: 0,
+		"ירוק" 	: 1,
+		"כחול" 	: 2,
 	};
 	var deviceLabels = {
-		"Motor" : 0,
-		"Speaker" : 1,
-		"LED" : 2,
-		"Display" : 3
+		"Motor" 	: 0,
+		"Speaker" 	: 1,
+		"LED" 		: 2,
+		"Display" 	: 3
+
+		//阿拉伯语
+		"محرك" 		: 0,
+		"المتحدث" 	: 1,
+		//"LED" 	: 2,
+		"شاشة" 		: 3,
+		//希伯拉语
+		"מנוע" 	: 0,
+		"רמקול" 	: 1,
+		//"LED" : 2,
+		"מסך" 	: 3,
 	};
 	var portLabels = {
 		"Automatic" : 0,
@@ -441,21 +553,53 @@
 		"4" : 4,
 		"5" : 5,
 		"6" : 6,
-		"7" : 7
+		"7" : 7,
+		//阿拉伯语
+		"اوتوماتي" 	: 0,
+		//希伯拉语
+		"אוטומטי" 	: 0,
 	};
 	var colorLabels = {
-		"Red" : 0,
-		"Yellow" : 1,
-		"Green" : 2,
-		"Blue" : 3,
-		"White" : 4
+		"Red" 		: 0,
+		"Yellow" 	: 1,
+		"Green" 	: 2,
+		"Blue" 		: 3,
+		"White" 	: 4,
+
+		//阿拉伯语
+		"احمر" : 0,
+		"اصفر" : 1,
+		"أخضر" : 2,
+		"أزرق" : 3,
+		"ابيض" : 4,
+		//希伯拉语
+		"אדום" 	: 0,
+		"צהוב" 	: 1,
+		"ירוק" 	: 2,
+		"כחול" 	: 3,
+		"לבן" 	: 4,
 	};
 	var gyroDirectionLables = {	
-		"TiltDown" : 0,
-		"TiltBack" : 1,
-		"TurnLeft" : 2,
-		"TurnRight" : 3
+		"TiltDown" 	: 0,
+		"TiltBack" 	: 1,
+		"TurnLeft" 	: 2,
+		"TurnRight" : 3,
+
+		//阿拉伯语
+		"الى تحت" 		: 0,
+		"الى فوق" 		: 1,
+		"الى اليسار" 	: 2,
+		"الى اليمين" 	: 3,
+		//希伯拉语
+		"כלפי מטה" 	: 0,
+		"כלפי מעלה" 	: 1,
+		"לצד שמאל" 	: 2,
+		"לצד ימין" 	: 3,
 	};
+
+/*******************************************************************************************************************/
+/*                                                                                                                 */
+/*******************************************************************************************************************/
 
 	function onMessage(p_Msg){
 
@@ -859,16 +1003,33 @@
     	scratchCommand(l_packet);
 	};
 
-	  // Check for GET param 'lang'
-	  var paramString = window.location.search.replace(/^\?|\/$/g, '');
-	  var vars = paramString.split("&");
-	  var lang = 'en';
-	  for (var i=0; i<vars.length; i++) {
-	    var pair = vars[i].split('=');
-	    if (pair.length > 1 && pair[0]=='lang')
-	      lang = pair[1];
-	  }
+	function getLanguage(){
 
+	  	var lang = navigator.browserLanguage ? navigator.browserLanguage : navigator.language; 
+
+	  	console.log("getLanguage 1: " + lang);
+	  	
+	  	if (lang.length === 0) {
+	  		lang = "en";
+	  	}
+
+	  	var l_array = lang.split("-");
+
+	  	if (l_array.length > 1) {
+
+	  		lang = l_array[0];
+	  	}
+	  	
+	  	console.log("getLanguage 2: " + lang);
+
+	  	return lang.toLowerCase();
+	  	
+	}
+
+/*******************************************************************************************************************/
+/*                                                                                                                 */
+/*******************************************************************************************************************/
+	  
 	var blocks = {
         en: [
 	        	[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
@@ -902,7 +1063,7 @@
 				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
 
 			],
-		'zh-cn': [
+		zh: [
 				[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "RotateForward" , "30"],
 				[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
@@ -932,7 +1093,159 @@
 				["R", "Compass Detection Angle","getCompassValue"],
 				["R", "Detected by Gyroscope %m.getGyroParam1","getGyroscopeValue","TiltDown"],
 				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
-			]		
+			],
+			//阿拉伯语
+			ar: [
+				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "RotateForward" , "30"],
+				[" ", "شغل المحرك %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "استدر  الى الامام" , "30"],
+
+				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
+				[" ", "قل %m.speakerParam1_0 ","openSpeakerHi", "مرحبا"],
+
+				//[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
+				[" ", "أظهر إحساس %m.speakerParam1_1 ","openSpeakerExpression", "غضب"],
+
+				//[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
+				[" ", "اظهر ردة فعل %m.speakerParam1_2 ","openSpeakerAction", "يرجف"],
+
+				//[" ", "Speaker Animal %m.speakerParam1_3 ","openSpeakerAnimal", "Cow"],
+				[" ", "صوت الحيوان %m.speakerParam1_3 ","openSpeakerAnimal", "بقرة"],
+
+				//[" ", "Speaker Piano %m.speakerParam1_4 ","openSpeakerPiano", "1"],
+				[" ", "عزف نغمات البيانو %m.speakerParam1_4 ","openSpeakerPiano", "1"],
+
+				//[" ", "Speaker Record %m.speakerParam1_5 ","openSpeakerRecord", "1"],
+				[" ", "تسجيل %m.speakerParam1_5 ","openSpeakerRecord", "1"],
+
+
+				//[" ", "Start LED %m.ledParam","openLED", "Red"],
+				[" ", "تشغيل LED %m.ledParam","openLED", "أحمر"],
+
+				//[" ", "Display Character %s","DisplayString", ""],
+				[" ", "عرض على الشاشة %s","DisplayString", ""],
+
+				//[" ", "Display Photo %m.displayParam1_1","DisplayPhoto", "1"],
+				[" ", "عرض الصورة %m.displayParam1_1","DisplayPhoto", "1"],
+
+				//[" ", "Close %m.closeParam","DisplayPhoto", "Motor"],
+				[" ", "توقف %m.closeParam","DisplayPhoto", "محرك"],
+
+				["-"],
+
+				//["R", "Ultrasonic Port %m.senorParam Obstacles Detected","getUltrasonicForObstacles","Automatic"],
+				["R", "دخول - مجس الاستشعار عن بعد %m.senorParam تحديد العقبات","getUltrasonicForObstacles","اوتوماتي"],
+
+				//["R", "Ultrasonic Port %m.senorParam Detect Distance","getUltrasonicForDistance","Automatic"],
+				["R", "دخول - مجس الاستشعار عن بعد %m.senorParam كشف البعد","getUltrasonicForDistance","اوتوماتي"],
+
+				//["R", "Touch Port %m.senorParam Touch an Object","getTouchSomething","Automatic"],
+				["R", "دخول -  مجس الاستشعار التي تعمل باللمس %m.senorParam كشف الملمس","getTouchSomething","اوتوماتي"],
+
+				//["R", "Color Port %m.senorParam Recognize%m.senorParam1","getColorValue","Automatic"],
+				["R", "دخول - مجس اللون %m.senorParam التعرف على الألوان%m.senorParam1","getColorValue","اوتوماتي"],
+
+				//["R", "Grayscale Port %m.senorParam Detection Value","getGrayscaleValue","Automatic"],
+				["R", "مجس استشعار مقياس الرمادية %m.senorParam تحديد قيمة ","getGrayscaleValue","اوتوماتي"],
+
+				//[" ", "Camera Port CAM Photo %m.displayParam1_1","takePhoto","1"],
+				[" ", "تصوير عن طريق إدخال الكاميرا %m.displayParam1_1","takePhoto","1"],
+
+				["-"],
+
+				//[" ", "Clock Reset","clockReset"],
+				[" ", "صفر  الساعة","clockReset"],
+
+				//["R", "System Time","getSystemTimeValue"],
+				["R", "ساعة النظام","getSystemTimeValue"],
+
+				//[" ", "Calibrate Compass","calibrateCompass"],
+				[" ", "تعير البوصلة","calibrateCompass"],
+
+				//["R", "Compass Detection Angle","getCompassValue"],
+				["R", "كشف زاوية البوصلة","getCompassValue"],
+
+				//["R", "Detected by Gyroscope %m.getGyroParam1","getGyroscopeValue","TiltDown"],
+				["R", "كشف الميل %m.getGyroParam1","getGyroscopeValue","الى تحت"],
+
+				//[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
+				[" ", "تسجيل الصوت %m.speakerParam1_5 %d.tapeParam1 ثانية","microphoneRecode","1","1"]
+			],
+			//希伯拉语
+			he: [
+				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "RotateForward" , "30"],
+				[" ", "הפעל מנוע %m.motorPort %m.motorDirection %d.motorSpeed ","runMotor", "A", "הסתובב קדימה" , "30"],
+
+				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
+				[" ", "אמור %m.speakerParam1_0 ","openSpeakerHi", "שלום"],
+
+				//[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
+				[" ", "הבע רגש %m.speakerParam1_1 ","openSpeakerExpression", "غضب"],
+
+				//[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
+				[" ", "הבע פעולה %m.speakerParam1_2 ","openSpeakerAction", "רועד"],
+
+				//[" ", "Speaker Animal %m.speakerParam1_3 ","openSpeakerAnimal", "Cow"],
+				[" ", "צליל חיות %m.speakerParam1_3 ","openSpeakerAnimal", "פרה"],
+
+				//[" ", "Speaker Piano %m.speakerParam1_4 ","openSpeakerPiano", "1"],
+				[" ", "נגן פסנטר %m.speakerParam1_4 ","openSpeakerPiano", "1"],
+
+				//[" ", "Speaker Record %m.speakerParam1_5 ","openSpeakerRecord", "1"],
+				[" ", "הקלט %m.speakerParam1_5 ","openSpeakerRecord", "1"],
+
+
+				//[" ", "Start LED %m.ledParam","openLED", "Red"],
+				[" ", "הפעל LED %m.ledParam","openLED", "אדום"],
+
+				//[" ", "Display Character %s","DisplayString", ""],
+				[" ", "הצג על המסך %s","DisplayString", ""],
+
+				//[" ", "Display Photo %m.displayParam1_1","DisplayPhoto", "1"],
+				[" ", "הצג תמונה %m.displayParam1_1","DisplayPhoto", "1"],
+
+				//[" ", "Close %m.closeParam","DisplayPhoto", "Motor"],
+				[" ", "הפסק %m.closeParam","DisplayPhoto", "מנוע"],
+
+				["-"],
+
+				//["R", "Ultrasonic Port %m.senorParam Obstacles Detected","getUltrasonicForObstacles","Automatic"],
+				["R", "כניסה - חיישן מרחק %m.senorParam זהה מכשולים","getUltrasonicForObstacles","אוטומטי"],
+
+				//["R", "Ultrasonic Port %m.senorParam Detect Distance","getUltrasonicForDistance","Automatic"],
+				["R", "כניסה - חיישן מרחק %m.senorParam זיהוי מרחק","getUltrasonicForDistance","אוטומטי"],
+
+				//["R", "Touch Port %m.senorParam Touch an Object","getTouchSomething","Automatic"],
+				["R", "כניסה - חיישן מגע %m.senorParam זיהוי מגע","getTouchSomething","אוטומטי"],
+
+				//["R", "Color Port %m.senorParam Recognize%m.senorParam1","getColorValue","Automatic"],
+				["R", "כניסה - חיישן צבע %m.senorParam זיהוי צבע %m.senorParam1","getColorValue","אוטומטי"],
+
+				//["R", "Grayscale Port %m.senorParam Detection Value","getGrayscaleValue","Automatic"],
+				["R", "חיישן סקאלה אפורה %m.senorParam זיהוי ערך ","getGrayscaleValue","אוטומטי"],
+
+				//[" ", "Camera Port CAM Photo %m.displayParam1_1","takePhoto","1"],
+				[" ", "צילום דרך כניסת מצלמה %m.displayParam1_1","takePhoto","1"],
+
+				["-"],
+
+				//[" ", "Clock Reset","clockReset"],
+				[" ", "אפס שעון","clockReset"],
+
+				//["R", "System Time","getSystemTimeValue"],
+				["R", "שעון מערכת","getSystemTimeValue"],
+
+				//[" ", "Calibrate Compass","calibrateCompass"],
+				[" ", "כיול מצפן","calibrateCompass"],
+
+				//["R", "Compass Detection Angle","getCompassValue"],
+				["R", "זיהוי זווית מצפן","getCompassValue"],
+
+				//["R", "Detected by Gyroscope %m.getGyroParam1","getGyroscopeValue","TiltDown"],
+				["R", "זהה הטייה %m.getGyroParam1","getGyroscopeValue","כלפי מטה"],
+
+				//[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
+				[" ", "הקלט %m.speakerParam1_5 %d.tapeParam1 שניה","microphoneRecode","1","1"]
+			]					
 		};
 
 
@@ -955,7 +1268,7 @@
 			getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
 			tapeParam1:["1","3","5","7"]
 		},
-		'zh-cn':{
+		zh:{
 			motorPort:["A","B","C","D"],
 			motorDirection:["RotateForward","RotateBackward"],
 			motorSpeed:["30","50","70"],
@@ -972,15 +1285,105 @@
 			senorParam1:["Red","Yellow","Green","Blue","White"],
 			getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
 			tapeParam1:["1","3","5","7"]
+		},
+		//阿拉伯语
+		ar:{
+			motorPort:["A","B","C","D"],
+
+			//motorDirection:["RotateForward","RotateBackward"],
+			motorDirection:["استدر  الى الامام","استدر الى الوراء"],
+
+			motorSpeed:["30","50","70"],
+
+			//speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
+			speakerParam1_0:["مرحبا","مع السلامه","اسف","اهلا\" وسهلا\"","انتبه الى"],
+
+			//speakerParam1_1:["Angry","Arrogant","Cry","Excited","Frightened","Aggrieved","Happy","Lovely","Laugh","Sad","Mad","Cheeky"],
+			speakerParam1_1:["غضب","متغطرس","بكاء","منفعل","خائف","يضايق","سعيد","ممتاز","يضحك","حزين","غاضب ","وقح"],
+
+			//speakerParam1_2:["Shivering","Cute","Approval","Hug","Yawn","Go","Sleep","Relax","Sneak"],
+			speakerParam1_2:["يرجف","ظريف","مأيد","عناق","تثاءب","تحرك","نائم","استرخاء","تسلل"],
+
+			//speakerParam1_3:["Cow","Tiger","Dolphin","Cricket","Duckuse","Gnat"],
+			speakerParam1_3:["بقرة","نمر","دلفين","صرصور","بط","بعوض"],
+
+			speakerParam1_4:["1","2","3","4","5","6","7","8"],
+			speakerParam1_5:[1,2,3,4,5,6,7,8,9,10],
+
+			//ledParam:["Red","Green","Blue"],
+			ledParam:["أحمر","أخضر","أزرق"],
+
+			displayParam1_1:[1,2,3,4,5,6,7,8,9,10],
+
+			//closeParam:["Motor","Speaker","LED","Display"],
+			closeParam:["محرك","المتحدث","LED","شاشة"],
+
+			//senorParam:["Automatic","1","2","3","4","5","6","7"],
+			senorParam:["اوتوماتي","1","2","3","4","5","6","7"],
+
+			//senorParam1:["Red","Yellow","Green","Blue","White"],
+			senorParam1:["احمر","اصفر","أخضر","أزرق","ابيض"],
+
+			//getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
+			getGyroParam1:["الى تحت","الى فوق","الى اليسار","الى اليمين"],
+
+			tapeParam1:["1","3","5","7"]
+		},
+		//希伯拉语
+		he:{
+			motorPort:["A","B","C","D"],
+
+			//motorDirection:["RotateForward","RotateBackward"],
+			motorDirection:["הסתובב קדימה","הסתובב אחורה"],
+
+			motorSpeed:["30","50","70"],
+
+			//speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
+			speakerParam1_0:["שלום","ביי","אופס !","ברוך הבא","תדאג ל"],
+
+			//speakerParam1_1:["Angry","Arrogant","Cry","Excited","Frightened","Aggrieved","Happy","Lovely","Laugh","Sad","Mad","Cheeky"],
+			speakerParam1_1:["כועס","שחצן","בוכה","נרגש","מפחד","מציק","שמח","יופי","צוחק","עצוב","עצבני","חצוף"],
+
+			//speakerParam1_2:["Shivering","Cute","Approval","Hug","Yawn","Go","Sleep","Relax","Sneak"],
+			speakerParam1_2:["רועד","חמוד","מסכים","חיבוק","פהוק","זוז","יושן","להרגע","להתגנב"],
+
+			//speakerParam1_3:["Cow","Tiger","Dolphin","Cricket","Duckuse","Gnat"],
+			speakerParam1_3:["פרה","נמר","דולפין","גוק","ברווז","יַתוּש"],
+
+			speakerParam1_4:["1","2","3","4","5","6","7","8"],
+			speakerParam1_5:[1,2,3,4,5,6,7,8,9,10],
+
+			//ledParam:["Red","Green","Blue"],
+			ledParam:["אדום","ירוק","כחול"],
+
+			displayParam1_1:[1,2,3,4,5,6,7,8,9,10],
+
+			//closeParam:["Motor","Speaker","LED","Display"],
+			closeParam:["מנוע","רמקול","LED","מסך"],
+
+			//senorParam:["Automatic","1","2","3","4","5","6","7"],
+			senorParam:["אוטומטי","1","2","3","4","5","6","7"],
+
+			//senorParam1:["Red","Yellow","Green","Blue","White"],
+			senorParam1:["אדום","צהוב","ירוק","כחול","לבן"],
+
+			//getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
+			getGyroParam1:["כלפי מטה","כלפי מעלה","לצד שמאל","לצד ימין"],
+
+			tapeParam1:["1","3","5","7"]
 		}
     };
 	var hid_info = {type: 'hid', vendor: 0x0416, product: 0xffff};
 
-  var descriptor = {
+	var lang = getLanguage();
+
+  	var descriptor = {
+
 		blocks : blocks[lang],
 		menus : menus[lang],
 		url : 'http://Abilix.github.io/abilix_scratch.js'
 	};
 
 	ScratchExtensions.register('Abilix', descriptor, ext);
+
 })({});
