@@ -1067,7 +1067,7 @@
 				["R", "Ultrasonic Port %m.senorParam Obstacles Detected","getUltrasonicForObstacles","Automatic"],
 				["R", "Ultrasonic Port %m.senorParam Detect Distance","getUltrasonicForDistance","Automatic"],
 				["R", "Touch Port %m.senorParam Touch an Object","getTouchSomething","Automatic"],
-				["R", "Color Port %m.senorParam Recognize%m.senorParam1","getColorValue","Automatic"],
+				["R", "Color Port %m.senorParam Recognize%m.senorParam1","getColorValue","Automatic","Red"],
 				["R", "Grayscale Port %m.senorParam Detection Value","getGrayscaleValue","Automatic"],
 				[" ", "Camera Port CAM Photo %m.displayParam1_1","takePhoto","1"],
 
@@ -1099,7 +1099,7 @@
 				["R", "Ultrasonic Port %m.senorParam Obstacles Detected","getUltrasonicForObstacles","Automatic"],
 				["R", "Ultrasonic Port %m.senorParam Detect Distance","getUltrasonicForDistance","Automatic"],
 				["R", "Touch Port %m.senorParam Touch an Object","getTouchSomething","Automatic"],
-				["R", "Color Port %m.senorParam Recognize%m.senorParam1","getColorValue","Automatic"],
+				["R", "Color Port %m.senorParam Recognize%m.senorParam1","getColorValue","Automatic","Red"],
 				["R", "Grayscale Port %m.senorParam Detection Value","getGrayscaleValue","Automatic"],
 				[" ", "Camera Port CAM Photo %m.displayParam1_1","takePhoto","1"],
 
@@ -1160,7 +1160,7 @@
 				["R", "دخول -  مجس الاستشعار التي تعمل باللمس %m.senorParam كشف الملمس","getTouchSomething","اوتوماتي"],
 
 				//["R", "Color Port %m.senorParam Recognize%m.senorParam1","getColorValue","Automatic"],
-				["R", "دخول - مجس اللون %m.senorParam التعرف على الألوان%m.senorParam1","getColorValue","اوتوماتي"],
+				["R", "دخول - مجس اللون %m.senorParam التعرف على الألوان%m.senorParam1","getColorValue","اوتوماتي","احمر"],
 
 				//["R", "Grayscale Port %m.senorParam Detection Value","getGrayscaleValue","Automatic"],
 				["R", "مجس استشعار مقياس الرمادية %m.senorParam تحديد قيمة ","getGrayscaleValue","اوتوماتي"],
@@ -1236,7 +1236,7 @@
 				["R", "כניסה - חיישן מגע %m.senorParam זיהוי מגע","getTouchSomething","אוטומטי"],
 
 				//["R", "Color Port %m.senorParam Recognize%m.senorParam1","getColorValue","Automatic"],
-				["R", "כניסה - חיישן צבע %m.senorParam זיהוי צבע %m.senorParam1","getColorValue","אוטומטי"],
+				["R", "כניסה - חיישן צבע %m.senorParam זיהוי צבע %m.senorParam1","getColorValue","אוטומטי","אדום"],
 
 				//["R", "Grayscale Port %m.senorParam Detection Value","getGrayscaleValue","Automatic"],
 				["R", "חיישן סקאלה אפורה %m.senorParam זיהוי ערך ","getGrayscaleValue","אוטומטי"],
