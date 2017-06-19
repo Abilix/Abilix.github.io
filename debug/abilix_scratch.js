@@ -382,6 +382,26 @@
         "D": 3,
     };
 
+    var moterNewPortLabels = {
+        "A": 0,
+        "B": 1,
+        "C": 2,
+        "D": 3,
+        "A+D": 4,
+        "B+C": 5,
+    };
+
+    var moterTypeLabels = {
+        "LittleMotor": 0,
+        "BigMotor": 1
+    };
+
+    var moterRunModeLabels = {
+        "Angle": 0,
+        "Loops": 1,
+        "Time": 2,
+    };
+
     // 
     var directionLabels = {
     	"RotateForward" 	: 0,
@@ -693,6 +713,48 @@
     	scratchCommand(l_packet);
 
     	console.log("openMotor end " + direction + " " + directionLabels[direction]);
+
+    };
+
+    ext.closedloopMotor = function(type, port, speed){
+
+    	console.log("closedloopMotor " + type + " " + port  +" " + speed);
+
+    	var l_packet = Packet.createNew(null, 16);
+
+    	l_packet.setMasterCmd(0x04);
+    	l_packet.setSubCmd(0x17);
+
+    	l_packet.setInt32(genNextID());
+    	l_packet.setInt32(moterTypeLabels[type]);
+    	l_packet.setInt32(moterNewPortLabels[port]);
+    	l_packet.setInt32(speed);
+
+    	l_packet.resetCheck();
+
+    	scratchCommand(l_packet);
+
+    };
+    ext.closedloopMotorMode = function(type, port, speed, runMode, value){
+
+    	console.log("closedloopMotor " + type + " " + port  +" " + speed + " " + runMode + " " +value);
+
+    	var l_packet = Packet.createNew(null, 24);
+
+    	l_packet.setMasterCmd(0x04);
+    	l_packet.setSubCmd(0x18);
+
+    	l_packet.setInt32(genNextID());
+    	l_packet.setInt32(moterTypeLabels[type]);
+    	l_packet.setInt32(moterPortLabels[port]);
+    	
+    	l_packet.setInt32(speed);
+    	l_packet.setInt32(moterRunModeLabels[runMode]);
+    	l_packet.setInt32(value);
+
+    	l_packet.resetCheck();
+
+    	scratchCommand(l_packet);
 
     };
 
@@ -1051,6 +1113,8 @@
 	var blocks = {
         en: [
 	        	[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
+	        	[" ", "Closed-loop run Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "LittleMotor","A", "30"],
+	        	[" ", "Closed-loop run Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed mode %m.motorRunMode value %d.motorValue ","closedloopMotorMode", "LittleMotor","A", "30", "Angle", "50"],
 				[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
 				[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
@@ -1272,6 +1336,10 @@
 			motorPort:["A","B","C","D"],
 			motorDirection:["RotateForward","RotateBackward"],
 			motorSpeed:["30","50","70"],
+			motorType:["LittleMotor","BigMotor"],
+			motorNewPort:["A","B","C","D","A+D","B+C"],
+			motorRunMode:["Angle","Loops","Time"],
+			motorValue:["25","50","75", "100"],
 			speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_1:["Angry","Arrogant","Cry","Excited","Frightened","Aggrieved","Happy","Lovely","Laugh","Sad","Mad","Cheeky"],
 			speakerParam1_2:["Shivering","Cute","Approval","Hug","Yawn","Go","Sleep","Relax","Sneak"],
