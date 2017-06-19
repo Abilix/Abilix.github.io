@@ -742,6 +742,8 @@
     	var t = Date.now();  
   
     	while(Date.now - t <= d);  
+
+    	console.log("wait: " + Date.now - t);
     }
 
     function CloseDevice(deviceId){
