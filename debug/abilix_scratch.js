@@ -739,6 +739,8 @@
 
     function wait(d){
 
+    	d = d * 1000;
+
     	var t = Date.now();  
 
     	console.log("wait begin: " + t);
