@@ -736,6 +736,29 @@
     	scratchCommand(l_packet);
 
     };
+
+    function wait(d){
+
+    	var t = Date.now();  
+  
+    	while(Date.now - t <= d);  
+    }
+
+    function CloseDevice(deviceId){
+
+		console.log("CloseDevice "+ deviceId );
+    	var l_packet = Packet.createNew(null, 8);
+    	l_packet.setMasterCmd(0x0A);
+    	l_packet.setSubCmd(0x05);
+
+    	l_packet.setInt32(genNextID());
+    	l_packet.setInt32( deviceId );
+
+    	l_packet.resetCheck();
+
+    	scratchCommand(l_packet);
+	}
+
     ext.closedloopMotorMode = function(type, port, speed, runMode, value){
 
     	console.log("closedloopMotorMode " + type + " " + port  +" " + speed + " " + runMode + " " +value);
@@ -751,12 +774,19 @@
     	l_packet.setInt32(moterNewPortLabels[port]);
     	
     	l_packet.setInt32(speed);
-    	l_packet.setInt32(moterRunModeLabels[runMode]);
+
+    	var l_run_mode = moterRunModeLabels[runMode];
+    	l_packet.setInt32(l_run_mode);
     	l_packet.setInt32(value);
 
     	l_packet.resetCheck();
 
     	scratchCommand(l_packet);
+
+    	if (l_run_mode == 2) {
+    		wait(value);
+    		CloseDevice(value);
+    	}
 
     };
 
@@ -857,16 +887,8 @@
 	ext.CloseDevice = function(deviceId){
 
 		console.log("CloseDevice "+ deviceId + " " + deviceLabels[deviceId]);
-    	var l_packet = Packet.createNew(null, 8);
-    	l_packet.setMasterCmd(0x0A);
-    	l_packet.setSubCmd(0x05);
-
-    	l_packet.setInt32(genNextID());
-    	l_packet.setInt32( deviceLabels[deviceId] );
-
-    	l_packet.resetCheck();
-
-    	scratchCommand(l_packet);
+    	
+    	CloseDevice(deviceLabels[deviceId]);
 	};
 
 	ext.getUltrasonicForObstacles = function(portId, p_callback){
