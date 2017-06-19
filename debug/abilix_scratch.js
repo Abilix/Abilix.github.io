@@ -723,7 +723,7 @@
 
     	var l_packet = Packet.createNew(null, 16);
 
-    	l_packet.setMasterCmd(0x04);
+    	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x17);
 
     	l_packet.setInt32(genNextID());
@@ -743,7 +743,7 @@
 
     	var l_packet = Packet.createNew(null, 24);
 
-    	l_packet.setMasterCmd(0x04);
+    	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x18);
 
     	l_packet.setInt32(genNextID());
