@@ -785,7 +785,7 @@
 
     	if (l_run_mode == 2) {
     		wait(value);
-    		CloseDevice(value);
+    		CloseDevice(0);
     	}
 
     };
