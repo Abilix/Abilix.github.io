@@ -740,8 +740,10 @@
     function wait(d){
 
     	var t = Date.now();  
+
+    	console.log("wait begin: " + t);
   
-    	while(Date.now - t <= d);  
+    	while(Date.now() - t <= d);  
 
     	console.log("wait: " + Date.now - t);
     }
