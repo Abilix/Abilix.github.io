@@ -739,7 +739,7 @@
     ext.closedloopMotorMode = function(type, port, speed, runMode, value){
 
     	console.log("closedloopMotorMode " + type + " " + port  +" " + speed + " " + runMode + " " +value);
-    	console.log("closedloopMotorMode " + moterTypeLabels[type] + " " + moterPortLabels[port]  +" " + speed + " " + moterRunModeLabels[runMode] + " " +value);
+    	console.log("closedloopMotorMode " + moterTypeLabels[type] + " " + moterNewPortLabels[port]  +" " + speed + " " + moterRunModeLabels[runMode] + " " +value);
 
     	var l_packet = Packet.createNew(null, 24);
 
@@ -748,7 +748,7 @@
 
     	l_packet.setInt32(genNextID());
     	l_packet.setInt32(moterTypeLabels[type]);
-    	l_packet.setInt32(moterPortLabels[port]);
+    	l_packet.setInt32(moterNewPortLabels[port]);
     	
     	l_packet.setInt32(speed);
     	l_packet.setInt32(moterRunModeLabels[runMode]);
