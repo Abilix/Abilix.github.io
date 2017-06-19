@@ -719,6 +719,7 @@
     ext.closedloopMotor = function(type, port, speed){
 
     	console.log("closedloopMotor " + type + " " + port  +" " + speed);
+    	console.log("closedloopMotor " + moterTypeLabels[type] + " " + moterNewPortLabels[port]  +" " + speed);
 
     	var l_packet = Packet.createNew(null, 16);
 
@@ -737,7 +738,8 @@
     };
     ext.closedloopMotorMode = function(type, port, speed, runMode, value){
 
-    	console.log("closedloopMotor " + type + " " + port  +" " + speed + " " + runMode + " " +value);
+    	console.log("closedloopMotorMode " + type + " " + port  +" " + speed + " " + runMode + " " +value);
+    	console.log("closedloopMotorMode " + moterTypeLabels[type] + " " + moterPortLabels[port]  +" " + speed + " " + moterRunModeLabels[runMode] + " " +value);
 
     	var l_packet = Packet.createNew(null, 24);
 
@@ -1147,6 +1149,8 @@
 			],
 		zh: [
 				[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
+				[" ", "Closed-loop run Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "LittleMotor","A", "30"],
+	        	[" ", "Closed-loop run Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed mode %m.motorRunMode value %d.motorValue ","closedloopMotorMode", "LittleMotor","A", "30", "Angle", "50"],
 				[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
 				[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
@@ -1358,6 +1362,10 @@
 			motorPort:["A","B","C","D"],
 			motorDirection:["RotateForward","RotateBackward"],
 			motorSpeed:["30","50","70"],
+			motorType:["LittleMotor","BigMotor"],
+			motorNewPort:["A","B","C","D","A+D","B+C"],
+			motorRunMode:["Angle","Loops","Time"],
+			motorValue:["25","50","75", "100"],
 			speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_1:["Angry","Arrogant","Cry","Excited","Frightened","Aggrieved","Happy","Lovely","Laugh","Sad","Mad","Cheeky"],
 			speakerParam1_2:["Shivering","Cute","Approval","Hug","Yawn","Go","Sleep","Relax","Sneak"],
