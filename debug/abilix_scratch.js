@@ -392,14 +392,8 @@
     };
 
     var moterTypeLabels = {
-        "LittleMotor": 0,
+        "SmallMotor": 0,
         "BigMotor": 1
-    };
-
-    var moterRunModeLabels = {
-        "Angle": 0,
-        "Loops": 1,
-        "Time": 2,
     };
 
     // 
@@ -737,19 +731,6 @@
 
     };
 
-    function wait(d){
-
-    	d = d * 1000;
-
-    	var t = Date.now();  
-
-    	console.log("wait begin: " + t);
-  
-    	while( (Date.now() - t) <= d);  
-
-    	console.log("wait: " + (Date.now() - t));
-    }
-
     function CloseDevice(deviceId){
 
 		console.log("CloseDevice "+ deviceId );
@@ -765,10 +746,7 @@
     	scratchCommand(l_packet);
 	}
 
-    ext.closedloopMotorMode = function(type, port, speed, runMode, value){
-
-    	console.log("closedloopMotorMode " + type + " " + port  +" " + speed + " " + runMode + " " +value);
-    	console.log("closedloopMotorMode " + moterTypeLabels[type] + " " + moterNewPortLabels[port]  +" " + speed + " " + moterRunModeLabels[runMode] + " " +value);
+    function closedloopMotorMode (type, port, speed, runMode, value){
 
     	var l_packet = Packet.createNew(null, 24);
 
@@ -776,24 +754,34 @@
     	l_packet.setSubCmd(0x18);
 
     	l_packet.setInt32(genNextID());
-    	l_packet.setInt32(moterTypeLabels[type]);
-    	l_packet.setInt32(moterNewPortLabels[port]);
+    	l_packet.setInt32(type);
+    	l_packet.setInt32(port);
     	
     	l_packet.setInt32(speed);
 
-    	var l_run_mode = moterRunModeLabels[runMode];
-    	l_packet.setInt32(l_run_mode);
+    	l_packet.setInt32(runMode);
     	l_packet.setInt32(value);
 
     	l_packet.resetCheck();
 
     	scratchCommand(l_packet);
 
-    	if (l_run_mode == 2) {
-    		wait(value);
-    		CloseDevice(0);
-    	}
+    }
 
+    ext.closedloopDegree = function(type, port, speed, degree){
+
+    	console.log("closedloopDegree " + type + " " + port  +" " + speed + " " +degree);
+    	console.log("closedloopDegree " + moterTypeLabels[type] + " " + moterNewPortLabels[port]  +" " + speed + " " +degree);
+
+    	closedloopMotorMode(moterTypeLabels[type], moterNewPortLabels[port], speed, 0, degree);
+    };
+
+    ext.closedloopRotation = function(type, port, speed, rotation){
+
+    	console.log("closedloopRotation " + type + " " + port  +" " + speed + " " +rotation);
+    	console.log("closedloopRotation " + moterTypeLabels[type] + " " + moterNewPortLabels[port]  +" " + speed + " " +rotation);
+
+    	closedloopMotorMode(moterTypeLabels[type], moterNewPortLabels[port], speed, 1, rotation);
     };
 
     function openSpeaker(p_type, p_param){
@@ -1143,8 +1131,9 @@
 	var blocks = {
         en: [
 	        	[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
-	        	[" ", "Closed-loop run Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "LittleMotor","A", "30"],
-	        	[" ", "Closed-loop run Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed mode %m.motorRunMode value %d.motorValue ","closedloopMotorMode", "LittleMotor","A", "30", "Angle", "50"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
 				[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
 				[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
@@ -1177,8 +1166,9 @@
 			],
 		zh: [
 				[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
-				[" ", "Closed-loop run Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "LittleMotor","A", "30"],
-	        	[" ", "Closed-loop run Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed mode %m.motorRunMode value %d.motorValue ","closedloopMotorMode", "LittleMotor","A", "30", "Angle", "50"],
+				[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
 				[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
 				[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
@@ -1368,10 +1358,10 @@
 			motorPort:["A","B","C","D"],
 			motorDirection:["RotateForward","RotateBackward"],
 			motorSpeed:["30","50","70"],
-			motorType:["LittleMotor","BigMotor"],
+			motorType:["SmallMotor","BigMotor"],
 			motorNewPort:["A","B","C","D","A+D","B+C"],
-			motorRunMode:["Angle","Loops","Time"],
-			motorValue:["25","50","75", "100"],
+			degreeValue:["30", "45", "60","90", "180", "360", "720", "1440", "2880", "5760", "10000"],
+			rotationValue:["2","3","5", "7", "20", "50", "70", "100"],
 			speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_1:["Angry","Arrogant","Cry","Excited","Frightened","Aggrieved","Happy","Lovely","Laugh","Sad","Mad","Cheeky"],
 			speakerParam1_2:["Shivering","Cute","Approval","Hug","Yawn","Go","Sleep","Relax","Sneak"],
@@ -1390,10 +1380,10 @@
 			motorPort:["A","B","C","D"],
 			motorDirection:["RotateForward","RotateBackward"],
 			motorSpeed:["30","50","70"],
-			motorType:["LittleMotor","BigMotor"],
+			motorType:["SmallMotor","BigMotor"],
 			motorNewPort:["A","B","C","D","A+D","B+C"],
-			motorRunMode:["Angle","Loops","Time"],
-			motorValue:["25","50","75", "100"],
+			degreeValue:["30", "45", "60","90", "180", "360", "720", "1440", "2880", "5760", "10000"],
+			rotationValue:["2","3","5", "7", "20", "50", "70", "100"],
 			speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_1:["Angry","Arrogant","Cry","Excited","Frightened","Aggrieved","Happy","Lovely","Laugh","Sad","Mad","Cheeky"],
 			speakerParam1_2:["Shivering","Cute","Approval","Hug","Yawn","Go","Sleep","Relax","Sneak"],
