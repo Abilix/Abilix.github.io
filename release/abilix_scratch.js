@@ -259,7 +259,7 @@
 
 	function AppProxy(){
 
-		self = this;
+		var self = this;
 
 		var m_TimeoutHandle = null;
 		var m_callback = null;
@@ -380,6 +380,26 @@
         "B": 1,
         "C": 2,
         "D": 3,
+    };
+
+    var moterNewPortLabels = {
+        "A": 0,
+        "B": 1,
+        "C": 2,
+        "D": 3,
+        "A+D": 4,
+        "B+C": 5,
+    };
+
+    var moterTypeLabels = {
+        "SmallMotor"	: 0,
+        "BigMotor"		: 1,
+        //阿拉伯语
+        "محرك صغير"		: 0,
+        "محرك كبير"		: 1,
+        //希伯拉语
+        "מנוע קטן" 		: 0,
+        "מנוע גדול" 		: 1,
     };
 
     // 
@@ -696,6 +716,80 @@
 
     };
 
+    ext.closedloopMotor = function(type, port, speed){
+
+    	console.log("closedloopMotor " + type + " " + port  +" " + speed);
+    	console.log("closedloopMotor " + moterTypeLabels[type] + " " + moterNewPortLabels[port]  +" " + speed);
+
+    	var l_packet = Packet.createNew(null, 16);
+
+    	l_packet.setMasterCmd(0x0A);
+    	l_packet.setSubCmd(0x17);
+
+    	l_packet.setInt32(genNextID());
+    	l_packet.setInt32(moterTypeLabels[type]);
+    	l_packet.setInt32(moterNewPortLabels[port]);
+    	l_packet.setInt32(speed);
+
+    	l_packet.resetCheck();
+
+    	scratchCommand(l_packet);
+
+    };
+
+    function CloseDevice(deviceId){
+
+		console.log("CloseDevice "+ deviceId );
+    	var l_packet = Packet.createNew(null, 8);
+    	l_packet.setMasterCmd(0x0A);
+    	l_packet.setSubCmd(0x05);
+
+    	l_packet.setInt32(genNextID());
+    	l_packet.setInt32( deviceId );
+
+    	l_packet.resetCheck();
+
+    	scratchCommand(l_packet);
+	}
+
+    function closedloopMotorMode (type, port, speed, runMode, value){
+
+    	var l_packet = Packet.createNew(null, 24);
+
+    	l_packet.setMasterCmd(0x0A);
+    	l_packet.setSubCmd(0x18);
+
+    	l_packet.setInt32(genNextID());
+    	l_packet.setInt32(type);
+    	l_packet.setInt32(port);
+    	
+    	l_packet.setInt32(speed);
+
+    	l_packet.setInt32(runMode);
+    	l_packet.setInt32(value);
+
+    	l_packet.resetCheck();
+
+    	scratchCommand(l_packet);
+
+    }
+
+    ext.closedloopDegree = function(type, port, speed, degree){
+
+    	console.log("closedloopDegree " + type + " " + port  +" " + speed + " " +degree);
+    	console.log("closedloopDegree " + moterTypeLabels[type] + " " + moterNewPortLabels[port]  +" " + speed + " " +degree);
+
+    	closedloopMotorMode(moterTypeLabels[type], moterNewPortLabels[port], speed, 0, degree);
+    };
+
+    ext.closedloopRotation = function(type, port, speed, rotation){
+
+    	console.log("closedloopRotation " + type + " " + port  +" " + speed + " " +rotation);
+    	console.log("closedloopRotation " + moterTypeLabels[type] + " " + moterNewPortLabels[port]  +" " + speed + " " +rotation);
+
+    	closedloopMotorMode(moterTypeLabels[type], moterNewPortLabels[port], speed, 1, rotation);
+    };
+
     function openSpeaker(p_type, p_param){
 
     	var l_packet = Packet.createNew(null, 12);
@@ -793,16 +887,8 @@
 	ext.CloseDevice = function(deviceId){
 
 		console.log("CloseDevice "+ deviceId + " " + deviceLabels[deviceId]);
-    	var l_packet = Packet.createNew(null, 8);
-    	l_packet.setMasterCmd(0x0A);
-    	l_packet.setSubCmd(0x05);
-
-    	l_packet.setInt32(genNextID());
-    	l_packet.setInt32( deviceLabels[deviceId] );
-
-    	l_packet.resetCheck();
-
-    	scratchCommand(l_packet);
+    	
+    	CloseDevice(deviceLabels[deviceId]);
 	};
 
 	ext.getUltrasonicForObstacles = function(portId, p_callback){
@@ -1051,6 +1137,9 @@
 	var blocks = {
         en: [
 	        	[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
 				[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
 				[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
@@ -1083,6 +1172,9 @@
 			],
 		zh: [
 				[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
+				[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
+	        	[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
 				[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "Speaker Expression %m.speakerParam1_1 ","openSpeakerExpression", "Angry"],
 				[" ", "Speaker Action %m.speakerParam1_2 ","openSpeakerAction", "Shivering"],
@@ -1116,6 +1208,15 @@
 			ar: [
 				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
 				[" ", "شغل المحرك %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "استدر  الى الامام" , "30"],
+
+				//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
+				[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed ","closedloopMotor", "محرك صغير","A", "30"],
+
+	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
+	        	[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  زاويه %d.degreeValue ","closedloopDegree", "محرك صغير","A", "30", "180"],
+
+	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
+	        	[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  خطوة %d.rotationValue ","closedloopRotation", "محرك صغير","A", "30", "2"],
 
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "قل %m.speakerParam1_0 ","openSpeakerHi", "مرحبا"],
@@ -1192,6 +1293,15 @@
 			he: [
 				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
 				[" ", "הפעל מנוע %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "הסתובב קדימה" , "30"],
+
+				//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
+				[" ", "חוג סגור %m.motorType פורט  %m.motorNewPort מהירות %d.motorSpeed ","closedloopMotor", "מנוע קטן","A", "30"],
+
+	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
+	        	[" ", "חוג סגור %m.motorType פורט %m.motorNewPort מהירות %d.motorSpeed  זווית %d.degreeValue ","closedloopDegree", "מנוע קטן","A", "30", "180"],
+
+	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
+	        	[" ", "חוג סגור %m.motorType פורט %m.motorNewPort מהירות %d.motorSpeed  צעד %d.rotationValue ","closedloopRotation", "מנוע קטן","A", "30", "2"],
 
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "אמור %m.speakerParam1_0 ","openSpeakerHi", "שלום"],
@@ -1272,6 +1382,10 @@
 			motorPort:["A","B","C","D"],
 			motorDirection:["RotateForward","RotateBackward"],
 			motorSpeed:["30","50","70"],
+			motorType:["SmallMotor","BigMotor"],
+			motorNewPort:["A","B","C","D","A+D","B+C"],
+			degreeValue:["30", "45", "60","90", "180", "360", "720", "1440", "2880", "5760", "10000"],
+			rotationValue:["2","3","5", "7", "20", "50", "70", "100"],
 			speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_1:["Angry","Arrogant","Cry","Excited","Frightened","Aggrieved","Happy","Lovely","Laugh","Sad","Mad","Cheeky"],
 			speakerParam1_2:["Shivering","Cute","Approval","Hug","Yawn","Go","Sleep","Relax","Sneak"],
@@ -1290,6 +1404,10 @@
 			motorPort:["A","B","C","D"],
 			motorDirection:["RotateForward","RotateBackward"],
 			motorSpeed:["30","50","70"],
+			motorType:["SmallMotor","BigMotor"],
+			motorNewPort:["A","B","C","D","A+D","B+C"],
+			degreeValue:["30", "45", "60","90", "180", "360", "720", "1440", "2880", "5760", "10000"],
+			rotationValue:["2","3","5", "7", "20", "50", "70", "100"],
 			speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_1:["Angry","Arrogant","Cry","Excited","Frightened","Aggrieved","Happy","Lovely","Laugh","Sad","Mad","Cheeky"],
 			speakerParam1_2:["Shivering","Cute","Approval","Hug","Yawn","Go","Sleep","Relax","Sneak"],
@@ -1312,6 +1430,13 @@
 			motorDirection:["استدر  الى الامام","استدر الى الوراء"],
 
 			motorSpeed:["30","50","70"],
+
+			//motorType:["SmallMotor","BigMotor"],
+			motorType:["محرك صغير","محرك كبير"],
+
+			motorNewPort:["A","B","C","D","A+D","B+C"],
+			degreeValue:["30", "45", "60","90", "180", "360", "720", "1440", "2880", "5760", "10000"],
+			rotationValue:["2","3","5", "7", "20", "50", "70", "100"],
 
 			//speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_0:["مرحبا","مع السلامه","اسف","اهلا\" وسهلا\"","انتبه الى"],
@@ -1355,6 +1480,13 @@
 			motorDirection:["הסתובב קדימה","הסתובב אחורה"],
 
 			motorSpeed:["30","50","70"],
+
+			//motorType:["SmallMotor","BigMotor"],
+			motorType:["מנוע קטן","מנוע גדול"],
+
+			motorNewPort:["A","B","C","D","A+D","B+C"],
+			degreeValue:["30", "45", "60","90", "180", "360", "720", "1440", "2880", "5760", "10000"],
+			rotationValue:["2","3","5", "7", "20", "50", "70", "100"],
 
 			//speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_0:["שלום","ביי","אופס !","ברוך הבא","תדאג ל"],
