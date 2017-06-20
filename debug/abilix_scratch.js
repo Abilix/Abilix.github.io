@@ -1216,7 +1216,7 @@
 	        	[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  زاويه %d.degreeValue ","closedloopDegree", "محرك صغير","A", "30", "180"],
 
 	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
-	        	[" ", "دائرة مغلقه %m.motorType نافذة %m.motorNewPort سرعه %d.motorSpeed  خطوة %d.rotationValue ","closedloopRotation", "محرك صغير","A", "30", "2"],
+	        	[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  خطوة %d.rotationValue ","closedloopRotation", "محرك صغير","A", "30", "2"],
 
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "قل %m.speakerParam1_0 ","openSpeakerHi", "مرحبا"],
