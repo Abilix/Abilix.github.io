@@ -259,7 +259,7 @@
 
 	function AppProxy(){
 
-		self = this;
+		var self = this;
 
 		var m_TimeoutHandle = null;
 		var m_callback = null;
@@ -392,8 +392,14 @@
     };
 
     var moterTypeLabels = {
-        "SmallMotor": 0,
-        "BigMotor": 1
+        "SmallMotor"	: 0,
+        "BigMotor"		: 1,
+        //阿拉伯语
+        "محرك صغير"		: 0,
+        "محرك كبير"		: 1,
+        //希伯拉语
+        "מנוע קטן" 		: 0,
+        "מנוע גדול" 		: 1,
     };
 
     // 
@@ -1203,6 +1209,15 @@
 				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
 				[" ", "شغل المحرك %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "استدر  الى الامام" , "30"],
 
+				//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
+				[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed ","closedloopMotor", "محرك صغير","A", "30"],
+
+	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
+	        	[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  زاويه %d.degreeValue ","closedloopDegree", "محرك صغير","A", "30", "180"],
+
+	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
+	        	[" ", "دائرة مغلقه %m.motorType نافذة %m.motorNewPort سرعه %d.motorSpeed  خطوة %d.rotationValue ","closedloopRotation", "محرك صغير","A", "30", "2"],
+
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "قل %m.speakerParam1_0 ","openSpeakerHi", "مرحبا"],
 
@@ -1278,6 +1293,15 @@
 			he: [
 				//[" ", "Start Motor %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "RotateForward" , "30"],
 				[" ", "הפעל מנוע %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "הסתובב קדימה" , "30"],
+
+				//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
+				[" ", "חוג סגור %m.motorType פורט  %m.motorNewPort מהירות %d.motorSpeed ","closedloopMotor", "מנוע קטן","A", "30"],
+
+	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
+	        	[" ", "חוג סגור %m.motorType פורט %m.motorNewPort מהירות %d.motorSpeed  זווית %d.degreeValue ","closedloopDegree", "מנוע קטן","A", "30", "180"],
+
+	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
+	        	[" ", "חוג סגור %m.motorType פורט %m.motorNewPort מהירות %d.motorSpeed  צעד %d.rotationValue ","closedloopRotation", "מנוע קטן","A", "30", "2"],
 
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "אמור %m.speakerParam1_0 ","openSpeakerHi", "שלום"],
@@ -1407,6 +1431,13 @@
 
 			motorSpeed:["30","50","70"],
 
+			//motorType:["SmallMotor","BigMotor"],
+			motorType:["محرك صغير","محرك كبير"],
+
+			motorNewPort:["A","B","C","D","A+D","B+C"],
+			degreeValue:["30", "45", "60","90", "180", "360", "720", "1440", "2880", "5760", "10000"],
+			rotationValue:["2","3","5", "7", "20", "50", "70", "100"],
+
 			//speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_0:["مرحبا","مع السلامه","اسف","اهلا\" وسهلا\"","انتبه الى"],
 
@@ -1449,6 +1480,13 @@
 			motorDirection:["הסתובב קדימה","הסתובב אחורה"],
 
 			motorSpeed:["30","50","70"],
+
+			//motorType:["SmallMotor","BigMotor"],
+			motorType:["מנוע קטן","מנוע גדול"],
+
+			motorNewPort:["A","B","C","D","A+D","B+C"],
+			degreeValue:["30", "45", "60","90", "180", "360", "720", "1440", "2880", "5760", "10000"],
+			rotationValue:["2","3","5", "7", "20", "50", "70", "100"],
 
 			//speakerParam1_0:["Hello","Bye","Oppose","Welcome","Lookafter"],
 			speakerParam1_0:["שלום","ביי","אופס !","ברוך הבא","תדאג ל"],
