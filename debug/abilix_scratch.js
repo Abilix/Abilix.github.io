@@ -624,7 +624,10 @@
 	function onMessage(p_Msg){
 
 		if (p_Msg.event == "CALLBACK__") {
-			_callbacks["callback_" + p_Msg.sessionId](p_Msg.value);
+			if(typeof _callbacks["callback_" + p_Msg.sessionId] == 'function' )
+			{
+                		_callbacks["callback_" + p_Msg.sessionId](p_Msg.value);
+			}
 		}
 	}
 
