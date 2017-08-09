@@ -1039,7 +1039,7 @@
 	};
 	ext.getCompassValue = function(p_callback){
 
-		console.log("getCompassValue");
+	console.log("getCompassValue");
     	
     	var l_packet = Packet.createNew(null, 4);
     	l_packet.setMasterCmd(0x0A);
@@ -1050,7 +1050,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet);
+    	scratchCommand(l_packet,l_sessionId,p_callback);
 	};
 	ext.getGyroscopeValue = function(dircetion, p_callback){
 
@@ -1066,7 +1066,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet);
+    	scratchCommand(l_packet,l_sessionId,p_callback);
 	};
 
 	ext.microphoneRecode = function(portId, time){
