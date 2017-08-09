@@ -830,7 +830,7 @@
 	};
 	ext.openSpeakerPiano = function(param){
 		console.log("openSpeakerPiano "+ param + " " + speakerLabels[param]);
-    	openSpeaker(4, speakerLabels[param]);
+    	openSpeaker(4, param);
 	};
 	ext.openSpeakerRecord = function(param){
 		console.log("openSpeakerRecord "+ param + " " + speakerLabels[param]);
@@ -871,7 +871,7 @@
 
 	ext.DisplayPhoto = function(photoId){
 
-		console.log("DisplayPhoto");
+	console.log("DisplayPhoto  photoID:" + photoId);
     	var l_packet = Packet.createNew(null, 12);
     	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x04);
