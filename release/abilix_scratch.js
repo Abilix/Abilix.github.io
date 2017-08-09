@@ -878,7 +878,7 @@
 
     	l_packet.setInt32(genNextID());
     	l_packet.setInt32(1);
-    	l_packet.setString(photoId);
+    	l_packet.setInt32(photoId);
 
     	l_packet.resetCheck();
 
