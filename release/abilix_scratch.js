@@ -622,7 +622,7 @@
 /*******************************************************************************************************************/
 
 	function onMessage(p_Msg){
-
+		console.log("_receivedID:" +p_Msg + "    _receivedData:" +p_Msg.value);
 		if (p_Msg.event == "CALLBACK__") {
 			_callbacks["callback_" + p_Msg.sessionId](p_Msg.value);
 		}
