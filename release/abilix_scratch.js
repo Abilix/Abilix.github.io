@@ -834,7 +834,7 @@
 	};
 	ext.openSpeakerRecord = function(param){
 		console.log("openSpeakerRecord "+ param + " " + speakerLabels[param]);
-    	openSpeaker(5, speakerLabels[param]);
+    	openSpeaker(5, param);
 	};
 	ext.openLED = function(color){
 
@@ -975,7 +975,7 @@
 	};
 	ext.takePhoto = function(portId){
 
-		console.log("takePhoto");
+	console.log("takePhoto  portId:" +portId);
     	
     	var l_packet = Packet.createNew(null, 8);
     	l_packet.setMasterCmd(0x0A);
@@ -983,7 +983,7 @@
 
     	var l_sessionId = genNextID();
     	l_packet.setInt32(l_sessionId);
-    	l_packet.setInt32(portLabels[portId] );
+    	l_packet.setInt32(portId);
 
     	l_packet.resetCheck();
 
@@ -1071,7 +1071,7 @@
 
 	ext.microphoneRecode = function(portId, time){
 
-		console.log("microphoneRecode");
+	console.log("microphoneRecode   portId:" +portId +"   time:"+time );
     	
     	var l_packet = Packet.createNew(null, 12);
     	l_packet.setMasterCmd(0x0A);
@@ -1079,7 +1079,7 @@
 
     	var l_sessionId = genNextID();
     	l_packet.setInt32(l_sessionId);
-    	l_packet.setInt32(portLabels[portId] );
+    	l_packet.setInt32(portId);
     	l_packet.setInt32(time);
 
     	l_packet.resetCheck();
