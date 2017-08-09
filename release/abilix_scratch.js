@@ -622,7 +622,7 @@
 /*******************************************************************************************************************/
 
 	function onMessage(p_Msg){
-		console.log("_receivedID:" +p_Msg + "    _receivedData:" +p_Msg.value);
+		console.log("_receivedID:" +p_Msg.sessionId + "    _receivedData:" +p_Msg.value);
 		if (p_Msg.event == "CALLBACK__") {
 			_callbacks["callback_" + p_Msg.sessionId](p_Msg.value);
 		}
@@ -1017,7 +1017,7 @@
     	l_packet.setInt32(l_sessionId);
 
     	l_packet.resetCheck();
-
+	console.log("getSystemTimeValue id:" + l_sessionId);
     	scratchCommand(l_packet,l_sessionId,p_callback);
 		
 	};
