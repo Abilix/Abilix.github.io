@@ -1018,7 +1018,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet);
+    	scratchCommand(l_packet,l_sessionId,p_callback);
 		
 	};
 	ext.calibrateCompass = function(){
