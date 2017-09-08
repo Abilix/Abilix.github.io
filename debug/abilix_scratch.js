@@ -375,6 +375,27 @@
 
 	var _callbacks = {};
 
+	var baCar_1_Labels={
+		"self-balance":0,
+		"Move Forward":1,
+		"Move Backward":2,
+		"Turn Left":3,
+		"Turn Right ":4,
+		"Stop":5,
+		"Move Forward and Turn Right":6,
+		"Move Backward and Turn Left":7,
+		"Move Backward and Turn Right":8,
+		"Move Forward and Turn Left":9,
+		//"L&R Wheel Speed Setting":10,
+	};
+
+	//超声
+	var baCar_2_Labels={
+		"No control":0,
+		"Start ultrasonic control":1,
+		"Close ultrasonic control":2,
+	};
+
 	var moterPortLabels = {
         "A": 0,
         "B": 1,
@@ -1090,6 +1111,32 @@
     	scratchCommand(l_packet);
 	};
 
+	ext.balanceCar = function(cmd, uSonic){
+
+		console.log("balanceCar");
+    	
+    	var l_packet = Packet.createNew(null, 8);
+    	l_packet.setMasterCmd(0x0A);
+    	l_packet.setSubCmd(0x19);
+
+    	var l_sessionId = genNextID();
+    	l_packet.setInt32(l_sessionId);
+    	//param1
+    	l_packet.setInt8(baCar_1_Labels[cmd] );
+    	l_packet.setInt8(baCar_2_Labels[uSonic] );
+    	l_packet.setInt8(1);
+    	l_packet.setInt8(20);
+
+    	l_packet.setInt8(0);
+    	l_packet.setInt8(0);
+    	l_packet.setInt8(0);
+    	l_packet.setInt8(0);
+
+    	l_packet.resetCheck();
+
+    	scratchCommand(l_packet);
+	};
+
 	function getSearchLanguage(){
 
 		var paramString = window.location.search.replace(/^\?|\/$/g, '');
@@ -1170,7 +1217,8 @@
 				[" ", "Calibrate Compass","calibrateCompass"],
 				["R", "Compass Detection Angle","getCompassValue"],
 				["R", "Detected by Gyroscope %m.getGyroParam1","getGyroscopeValue","TiltDown"],
-				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
+				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"],
+				[" ", "Balance bot %m.balanceCarParam1 Ultrasonic Control %m.balanceCarParam2","balanceCar","self-balance","No control"]
 
 			],
 		zh: [
@@ -1205,7 +1253,8 @@
 				[" ", "Calibrate Compass","calibrateCompass"],
 				["R", "Compass Detection Angle","getCompassValue"],
 				["R", "Detected by Gyroscope %m.getGyroParam1","getGyroscopeValue","TiltDown"],
-				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
+				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"],
+				[" ", "Balance bot %m.balanceCarParam1 Ultrasonic Control %m.balanceCarParam2","balanceCar","self-balance","No control"]
 			],
 			//阿拉伯语
 			ar: [
@@ -1401,7 +1450,10 @@
 			senorParam:["Automatic","1","2","3","4","5","6","7"],
 			senorParam1:["Red","Yellow","Green","Blue","White"],
 			getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
-			tapeParam1:["1","3","5","7"]
+			tapeParam1:["1","3","5","7"],
+			//balance bot
+			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
+			balanceCarParam2:["No control","Start ultrasonic control","Close ultrasonic control"]
 		},
 		zh:{
 			motorPort:["A","B","C","D"],
@@ -1423,7 +1475,10 @@
 			senorParam:["Automatic","1","2","3","4","5","6","7"],
 			senorParam1:["Red","Yellow","Green","Blue","White"],
 			getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
-			tapeParam1:["1","3","5","7"]
+			tapeParam1:["1","3","5","7"],
+			//balance bot
+			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
+			balanceCarParam2:["No control","Start ultrasonic control","Close ultrasonic control"]
 		},
 		//阿拉伯语
 		ar:{
