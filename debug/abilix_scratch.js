@@ -1125,7 +1125,7 @@
     	l_packet.setInt8(baCar_1_Labels[cmd] );
     	l_packet.setInt8(baCar_2_Labels[uSonic] );
     	l_packet.setInt8(1);
-    	l_packet.setInt8(20);
+    	l_packet.setInt8(40);
 
     	l_packet.setInt8(0);
     	l_packet.setInt8(0);
@@ -1133,6 +1133,7 @@
     	l_packet.setInt8(0);
 
     	l_packet.resetCheck();
+    	l_packet.print();
 
     	scratchCommand(l_packet);
 	};
