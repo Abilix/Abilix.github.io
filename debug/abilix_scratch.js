@@ -1115,7 +1115,7 @@
 
 		console.log("balanceCar");
     	
-    	var l_packet = Packet.createNew(null, 8);
+    	var l_packet = Packet.createNew(null, 12);
     	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x19);
 
