@@ -380,7 +380,7 @@
 		"Move Forward":1,
 		"Move Backward":2,
 		"Turn Left":3,
-		"Turn Right ":4,
+		"Turn Right":4,
 		"Stop":5,
 		"Move Forward and Turn Right":6,
 		"Move Backward and Turn Left":7,
