@@ -1133,7 +1133,7 @@
     	l_packet.setInt8(0);
 
     	l_packet.resetCheck();
-    	l_packet.print();
+    	console.log(l_packet.print());
 
     	scratchCommand(l_packet);
 	};
