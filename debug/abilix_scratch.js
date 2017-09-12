@@ -1569,7 +1569,7 @@
 			//getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
 			getGyroParam1:["الى تحت","الى فوق","الى اليسار","الى اليمين"],
 
-			tapeParam1:["1","3","5","7"]
+			tapeParam1:["1","3","5","7"],
 
 //			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
 			balanceCarParam1:["المعلمة","تقدم إلى الأمام", "التحرك إلى الوراء", "انعطف لليسار","انعطف يمينا","توقف","المضي قدما وتحويل يمينا","لتحرك إلى الوراء وتحويل اليسار","لتحرك إلى الوراء وتحويل يمينا","لتحرك إلى الأمام وتحويل اليسار"],//"L&R Wheel Speed Setting"
@@ -1625,7 +1625,7 @@
 			//getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
 			getGyroParam1:["כלפי מטה","כלפי מעלה","לצד שמאל","לצד ימין"],
 
-			tapeParam1:["1","3","5","7"]
+			tapeParam1:["1","3","5","7"],
 
 //			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
 			balanceCarParam1:["פרמטר","להתקדם","העבר אחורה", "פונה שמאלה","פנה ימינה","תפסיק","העבר קדימה ופנה ימינה","עבור אחורה ופנה שמאלה","עבור אחורה ופנה ימינה","העבר קדימה ופנה שמאלה"],//"L&R Wheel Speed Setting"
