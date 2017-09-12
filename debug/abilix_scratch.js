@@ -387,6 +387,30 @@
 		"Move Backward and Turn Right":8,
 		"Move Forward and Turn Left":9,
 		//"L&R Wheel Speed Setting":10,
+		//Arab		
+		"المعلمة":0,
+		"تقدم إلى الأمام":1,
+		 "التحرك إلى الوراء":2, 
+		 "انعطف لليسار":3,
+		 "انعطف يمينا":4,
+		 "توقف":5,
+		 "المضي قدما وتحويل يمينا":6,
+		 "لتحرك إلى الوراء وتحويل اليسار":7,
+		 "لتحرك إلى الوراء وتحويل يمينا":8,
+		 "لتحرك إلى الأمام وتحويل اليسار"]:9,
+		 //"L&R Wheel Speed Setting"
+		//Hebrew
+		"פרמטר":0,
+		"להתקדם":1,
+		"העבר אחורה":2, 
+		"פונה שמאלה":3,
+		"פנה ימינה":4,
+		"תפסיק":5,
+		"העבר קדימה ופנה ימינה":6,
+		"עבור אחורה ופנה שמאלה":7,
+		"עבור אחורה ופנה ימינה":8,
+		"העבר קדימה ופנה שמאלה"]:9
+		//"L&R Wheel Speed Setting"			
 	};
 
 	//超声
@@ -394,6 +418,14 @@
 		"No control":0,
 		"Start ultrasonic control":1,
 		"Close ultrasonic control":2,
+		//Arab
+		"لا تحكم":0,
+		"بدء التحكم بالموجات فوق الصوتية":1, 
+		"غلاق التحكم بالموجات فوق الصوتية":2,
+		//Hebrew
+		"אין שליטה":0,
+		"התחל שליטה קולי":1,
+		"סגור שליטה קולי":2
 	};
 
 	var moterPortLabels = {
@@ -1340,7 +1372,11 @@
 				["R", "كشف الميل %m.getGyroParam1","getGyroscopeValue","الى تحت"],
 
 				//[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
-				[" ", "تسجيل الصوت %m.speakerParam1_5 %d.tapeParam1 ثانية","microphoneRecode","1","1"]
+				[" ", "تسجيل الصوت %m.speakerParam1_5 %d.tapeParam1 ثانية","microphoneRecode","1","1"],
+
+				//[" ", "Balance bot %m.balanceCarParam1 Ultrasonic Control %m.balanceCarParam2","balanceCar","self-balance","No control"]
+				[" ", "توازن بوت %m.balanceCarParam1 التحكم بالموجات فوق الصوتية %m.balanceCarParam2","balanceCar","self-balance","No control"]
+
 			],
 			//希伯拉语
 			he: [
@@ -1425,7 +1461,11 @@
 				["R", "זהה הטייה %m.getGyroParam1","getGyroscopeValue","כלפי מטה"],
 
 				//[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
-				[" ", "הקלט %m.speakerParam1_5 %d.tapeParam1 שניה","microphoneRecode","1","1"]
+				[" ", "הקלט %m.speakerParam1_5 %d.tapeParam1 שניה","microphoneRecode","1","1"],
+
+				//[" ", "Balance bot %m.balanceCarParam1 Ultrasonic Control %m.balanceCarParam2","balanceCar","self-balance","No control"]
+				[" ", "איזון בוט %m.balanceCarParam1 קולי שליטה %m.balanceCarParam2","balanceCar","self-balance","No control"]
+
 			]					
 		};
 
@@ -1530,6 +1570,12 @@
 			getGyroParam1:["الى تحت","الى فوق","الى اليسار","الى اليمين"],
 
 			tapeParam1:["1","3","5","7"]
+
+//			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
+			balanceCarParam1:["المعلمة","تقدم إلى الأمام", "التحرك إلى الوراء", "انعطف لليسار","انعطف يمينا","توقف","المضي قدما وتحويل يمينا","لتحرك إلى الوراء وتحويل اليسار","لتحرك إلى الوراء وتحويل يمينا","لتحرك إلى الأمام وتحويل اليسار"],//"L&R Wheel Speed Setting"
+			
+			// balanceCarParam2:["No control","Start ultrasonic control","Close ultrasonic control"]
+			balanceCarParam2:["لا تحكم","بدء التحكم بالموجات فوق الصوتية", "غلاق التحكم بالموجات فوق الصوتية"]
 		},
 		//希伯拉语
 		he:{
@@ -1580,6 +1626,13 @@
 			getGyroParam1:["כלפי מטה","כלפי מעלה","לצד שמאל","לצד ימין"],
 
 			tapeParam1:["1","3","5","7"]
+
+//			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
+			balanceCarParam1:["פרמטר","להתקדם","העבר אחורה", "פונה שמאלה","פנה ימינה","תפסיק","העבר קדימה ופנה ימינה","עבור אחורה ופנה שמאלה","עבור אחורה ופנה ימינה","העבר קדימה ופנה שמאלה"],//"L&R Wheel Speed Setting"
+
+			// balanceCarParam2:["No control","Start ultrasonic control","Close ultrasonic control"]
+			balanceCarParam2:["אין שליטה","התחל שליטה קולי","סגור שליטה קולי"]
+
 		}
     };
 	var hid_info = {type: 'hid', vendor: 0x0416, product: 0xffff};
