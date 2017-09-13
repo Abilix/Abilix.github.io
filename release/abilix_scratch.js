@@ -375,6 +375,59 @@
 
 	var _callbacks = {};
 
+	var baCar_1_Labels={
+		"self-balance":0,
+		"Move Forward":1,
+		"Move Backward":2,
+		"Turn Left":3,
+		"Turn Right":4,
+		"Stop":5,
+		"Move Forward and Turn Right":6,
+		"Move Backward and Turn Left":7,
+		"Move Backward and Turn Right":8,
+		"Move Forward and Turn Left":9,
+		//"L&R Wheel Speed Setting":10,
+		//Arab		
+		"المعلمة":0,
+		"تقدم إلى الأمام":1,
+		 "التحرك إلى الوراء":2, 
+		 "انعطف لليسار":3,
+		 "انعطف يمينا":4,
+		 "توقف":5,
+		 "المضي قدما وتحويل يمينا":6,
+		 "لتحرك إلى الوراء وتحويل اليسار":7,
+		 "لتحرك إلى الوراء وتحويل يمينا":8,
+		 "لتحرك إلى الأمام وتحويل اليسار":9,
+		 //"L&R Wheel Speed Setting"
+		//Hebrew
+		"פרמטר":0,
+		"להתקדם":1,
+		"העבר אחורה":2, 
+		"פונה שמאלה":3,
+		"פנה ימינה":4,
+		"תפסיק":5,
+		"העבר קדימה ופנה ימינה":6,
+		"עבור אחורה ופנה שמאלה":7,
+		"עבור אחורה ופנה ימינה":8,
+		"העבר קדימה ופנה שמאלה":9
+		//"L&R Wheel Speed Setting"			
+	};
+
+	//超声
+	var baCar_2_Labels={
+		"No control":0,
+		"Start ultrasonic control":1,
+		"Close ultrasonic control":2,
+		//Arab
+		"لا تحكم":0,
+		"بدء التحكم بالموجات فوق الصوتية":1, 
+		"غلاق التحكم بالموجات فوق الصوتية":2,
+		//Hebrew
+		"אין שליטה":0,
+		"התחל שליטה קולי":1,
+		"סגור שליטה קולי":2
+	};
+
 	var moterPortLabels = {
         "A": 0,
         "B": 1,
@@ -622,12 +675,12 @@
 /*******************************************************************************************************************/
 
 	function onMessage(p_Msg){
-		console.log("_receivedID:" +p_Msg.sessionId + "    _receivedData:" +p_Msg.value);
+
 		if (p_Msg.event == "CALLBACK__") {
 			if(typeof _callbacks["callback_" + p_Msg.sessionId] == 'function' )
 			{
-				_callbacks["callback_" + p_Msg.sessionId](p_Msg.value);
-			}    
+                		_callbacks["callback_" + p_Msg.sessionId](p_Msg.value);
+			}
 		}
 	}
 
@@ -833,11 +886,11 @@
 	};
 	ext.openSpeakerPiano = function(param){
 		console.log("openSpeakerPiano "+ param + " " + speakerLabels[param]);
-    	openSpeaker(4, param);
+    	openSpeaker(4, speakerLabels[param]);
 	};
 	ext.openSpeakerRecord = function(param){
 		console.log("openSpeakerRecord "+ param + " " + speakerLabels[param]);
-    	openSpeaker(5, param);
+    	openSpeaker(5, speakerLabels[param]);
 	};
 	ext.openLED = function(color){
 
@@ -874,14 +927,14 @@
 
 	ext.DisplayPhoto = function(photoId){
 
-	console.log("DisplayPhoto  photoID:" + photoId);
+		console.log("DisplayPhoto");
     	var l_packet = Packet.createNew(null, 12);
     	l_packet.setMasterCmd(0x0A);
     	l_packet.setSubCmd(0x04);
 
     	l_packet.setInt32(genNextID());
     	l_packet.setInt32(1);
-    	l_packet.setInt32(photoId);
+    	l_packet.setString(photoId);
 
     	l_packet.resetCheck();
 
@@ -978,7 +1031,7 @@
 	};
 	ext.takePhoto = function(portId){
 
-	console.log("takePhoto  portId:" +portId);
+		console.log("takePhoto");
     	
     	var l_packet = Packet.createNew(null, 8);
     	l_packet.setMasterCmd(0x0A);
@@ -986,7 +1039,7 @@
 
     	var l_sessionId = genNextID();
     	l_packet.setInt32(l_sessionId);
-    	l_packet.setInt32(portId);
+    	l_packet.setInt32(portLabels[portId] );
 
     	l_packet.resetCheck();
 
@@ -1020,8 +1073,8 @@
     	l_packet.setInt32(l_sessionId);
 
     	l_packet.resetCheck();
-	console.log("getSystemTimeValue id:" + l_sessionId);
-    	scratchCommand(l_packet,l_sessionId,p_callback);
+
+    	scratchCommand(l_packet);
 		
 	};
 	ext.calibrateCompass = function(){
@@ -1042,7 +1095,7 @@
 	};
 	ext.getCompassValue = function(p_callback){
 
-	console.log("getCompassValue");
+		console.log("getCompassValue");
     	
     	var l_packet = Packet.createNew(null, 4);
     	l_packet.setMasterCmd(0x0A);
@@ -1053,7 +1106,7 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet,l_sessionId,p_callback);
+    	scratchCommand(l_packet);
 	};
 	ext.getGyroscopeValue = function(dircetion, p_callback){
 
@@ -1069,12 +1122,12 @@
 
     	l_packet.resetCheck();
 
-    	scratchCommand(l_packet,l_sessionId,p_callback);
+    	scratchCommand(l_packet);
 	};
 
 	ext.microphoneRecode = function(portId, time){
 
-	console.log("microphoneRecode   portId:" +portId +"   time:"+time );
+		console.log("microphoneRecode");
     	
     	var l_packet = Packet.createNew(null, 12);
     	l_packet.setMasterCmd(0x0A);
@@ -1082,10 +1135,37 @@
 
     	var l_sessionId = genNextID();
     	l_packet.setInt32(l_sessionId);
-    	l_packet.setInt32(portId);
+    	l_packet.setInt32(portLabels[portId] );
     	l_packet.setInt32(time);
 
     	l_packet.resetCheck();
+
+    	scratchCommand(l_packet);
+	};
+
+	ext.balanceCar = function(cmd, uSonic){
+
+		console.log("balanceCar");
+    	
+    	var l_packet = Packet.createNew(null, 12);
+    	l_packet.setMasterCmd(0x0A);
+    	l_packet.setSubCmd(0x19);
+
+    	var l_sessionId = genNextID();
+    	l_packet.setInt32(l_sessionId);
+    	//param1
+    	l_packet.setInt8(baCar_1_Labels[cmd] );
+    	l_packet.setInt8(baCar_2_Labels[uSonic] );
+    	l_packet.setInt8(1);
+    	l_packet.setInt8(40);
+
+    	l_packet.setInt8(0);
+    	l_packet.setInt8(0);
+    	l_packet.setInt8(0);
+    	l_packet.setInt8(0);
+
+    	l_packet.resetCheck();
+    	console.log(l_packet.print());
 
     	scratchCommand(l_packet);
 	};
@@ -1170,7 +1250,8 @@
 				[" ", "Calibrate Compass","calibrateCompass"],
 				["R", "Compass Detection Angle","getCompassValue"],
 				["R", "Detected by Gyroscope %m.getGyroParam1","getGyroscopeValue","TiltDown"],
-				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
+				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"],
+				[" ", "Balance bot %m.balanceCarParam1 Ultrasonic Control %m.balanceCarParam2","balanceCar","self-balance","No control"]
 
 			],
 		zh: [
@@ -1205,7 +1286,8 @@
 				[" ", "Calibrate Compass","calibrateCompass"],
 				["R", "Compass Detection Angle","getCompassValue"],
 				["R", "Detected by Gyroscope %m.getGyroParam1","getGyroscopeValue","TiltDown"],
-				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
+				[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"],
+				[" ", "Balance bot %m.balanceCarParam1 Ultrasonic Control %m.balanceCarParam2","balanceCar","self-balance","No control"]
 			],
 			//阿拉伯语
 			ar: [
@@ -1290,7 +1372,11 @@
 				["R", "كشف الميل %m.getGyroParam1","getGyroscopeValue","الى تحت"],
 
 				//[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
-				[" ", "تسجيل الصوت %m.speakerParam1_5 %d.tapeParam1 ثانية","microphoneRecode","1","1"]
+				[" ", "تسجيل الصوت %m.speakerParam1_5 %d.tapeParam1 ثانية","microphoneRecode","1","1"],
+
+				//[" ", "Balance bot %m.balanceCarParam1 Ultrasonic Control %m.balanceCarParam2","balanceCar","self-balance","No control"]
+				[" ", "توازن بوت %m.balanceCarParam1 التحكم بالموجات فوق الصوتية %m.balanceCarParam2","balanceCar","self-balance","No control"]
+
 			],
 			//希伯拉语
 			he: [
@@ -1375,7 +1461,11 @@
 				["R", "זהה הטייה %m.getGyroParam1","getGyroscopeValue","כלפי מטה"],
 
 				//[" ", "Recording %m.speakerParam1_5 %d.tapeParam1 Second","microphoneRecode","1","1"]
-				[" ", "הקלט %m.speakerParam1_5 %d.tapeParam1 שניה","microphoneRecode","1","1"]
+				[" ", "הקלט %m.speakerParam1_5 %d.tapeParam1 שניה","microphoneRecode","1","1"],
+
+				//[" ", "Balance bot %m.balanceCarParam1 Ultrasonic Control %m.balanceCarParam2","balanceCar","self-balance","No control"]
+				[" ", "איזון בוט %m.balanceCarParam1 קולי שליטה %m.balanceCarParam2","balanceCar","self-balance","No control"]
+
 			]					
 		};
 
@@ -1401,7 +1491,10 @@
 			senorParam:["Automatic","1","2","3","4","5","6","7"],
 			senorParam1:["Red","Yellow","Green","Blue","White"],
 			getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
-			tapeParam1:["1","3","5","7"]
+			tapeParam1:["1","3","5","7"],
+			//balance bot
+			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
+			balanceCarParam2:["No control","Start ultrasonic control","Close ultrasonic control"]
 		},
 		zh:{
 			motorPort:["A","B","C","D"],
@@ -1423,7 +1516,10 @@
 			senorParam:["Automatic","1","2","3","4","5","6","7"],
 			senorParam1:["Red","Yellow","Green","Blue","White"],
 			getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
-			tapeParam1:["1","3","5","7"]
+			tapeParam1:["1","3","5","7"],
+			//balance bot
+			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
+			balanceCarParam2:["No control","Start ultrasonic control","Close ultrasonic control"]
 		},
 		//阿拉伯语
 		ar:{
@@ -1473,7 +1569,13 @@
 			//getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
 			getGyroParam1:["الى تحت","الى فوق","الى اليسار","الى اليمين"],
 
-			tapeParam1:["1","3","5","7"]
+			tapeParam1:["1","3","5","7"],
+
+//			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
+			balanceCarParam1:["المعلمة","تقدم إلى الأمام", "التحرك إلى الوراء", "انعطف لليسار","انعطف يمينا","توقف","المضي قدما وتحويل يمينا","لتحرك إلى الوراء وتحويل اليسار","لتحرك إلى الوراء وتحويل يمينا","لتحرك إلى الأمام وتحويل اليسار"],//"L&R Wheel Speed Setting"
+			
+			// balanceCarParam2:["No control","Start ultrasonic control","Close ultrasonic control"]
+			balanceCarParam2:["لا تحكم","بدء التحكم بالموجات فوق الصوتية", "غلاق التحكم بالموجات فوق الصوتية"]
 		},
 		//希伯拉语
 		he:{
@@ -1523,7 +1625,14 @@
 			//getGyroParam1:["TiltDown","TiltBack","TurnLeft","TurnRight"],
 			getGyroParam1:["כלפי מטה","כלפי מעלה","לצד שמאל","לצד ימין"],
 
-			tapeParam1:["1","3","5","7"]
+			tapeParam1:["1","3","5","7"],
+
+//			balanceCarParam1:["self-balance","Move Forward","Move Backward", "Turn Left","Turn Right","Stop","Move Forward and Turn Right","Move Backward and Turn Left","Move Backward and Turn Right","Move Forward and Turn Left"],//"L&R Wheel Speed Setting"
+			balanceCarParam1:["פרמטר","להתקדם","העבר אחורה", "פונה שמאלה","פנה ימינה","תפסיק","העבר קדימה ופנה ימינה","עבור אחורה ופנה שמאלה","עבור אחורה ופנה ימינה","העבר קדימה ופנה שמאלה"],//"L&R Wheel Speed Setting"
+
+			// balanceCarParam2:["No control","Start ultrasonic control","Close ultrasonic control"]
+			balanceCarParam2:["אין שליטה","התחל שליטה קולי","סגור שליטה קולי"]
+
 		}
     };
 	var hid_info = {type: 'hid', vendor: 0x0416, product: 0xffff};
