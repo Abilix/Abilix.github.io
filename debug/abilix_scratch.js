@@ -676,6 +676,7 @@
 
 	function onMessage(p_Msg){
 
+		console.log(" p_Msg.sessionId" +  p_Msg.sessionId + ",p_Msg.event" + p_Msg.event);
 		if (p_Msg.event == "CALLBACK__") {
 			if(typeof _callbacks["callback_" + p_Msg.sessionId] == 'function' )
 			{
