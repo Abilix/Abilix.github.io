@@ -1296,13 +1296,13 @@
 				[" ", "شغل المحرك %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "استدر  الى الامام" , "30"],
 
 				//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
-				[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed ","closedloopMotor", "محرك صغير","A", "30"],
+				[" ", "دائره مفتوحة %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed ","closedloopMotor", "محرك صغير","A", "30"],
 
 	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
-	        	[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  زاويه %d.degreeValue ","closedloopDegree", "محرك صغير","A", "30", "180"],
+	        	[" ", "دائره مفتوحة %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  زاويه %d.degreeValue ","closedloopDegree", "محرك صغير","A", "30", "180"],
 
 	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
-	        	[" ", "دائرة مغلقه %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  خطوة %d.rotationValue ","closedloopRotation", "محرك صغير","A", "30", "2"],
+	        	[" ", "دائره مفتوحة %m.motorType نافذة الادخال %m.motorNewPort سرعه %d.motorSpeed  خطوة %d.rotationValue ","closedloopRotation", "محرك صغير","A", "30", "2"],
 
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "قل %m.speakerParam1_0 ","openSpeakerHi", "مرحبا"],
@@ -1385,13 +1385,13 @@
 				[" ", "הפעל מנוע %m.motorPort %m.motorDirection %d.motorSpeed ","openMotor", "A", "הסתובב קדימה" , "30"],
 
 				//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed ","closedloopMotor", "SmallMotor","A", "30"],
-				[" ", "חוג סגור %m.motorType פורט  %m.motorNewPort מהירות %d.motorSpeed ","closedloopMotor", "מנוע קטן","A", "30"],
+				[" ", "חוג פתוח %m.motorType פורט  %m.motorNewPort מהירות %d.motorSpeed ","closedloopMotor", "מנוע קטן","A", "30"],
 
 	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  degree %d.degreeValue ","closedloopDegree", "SmallMotor","A", "30", "180"],
-	        	[" ", "חוג סגור %m.motorType פורט %m.motorNewPort מהירות %d.motorSpeed  זווית %d.degreeValue ","closedloopDegree", "מנוע קטן","A", "30", "180"],
+	        	[" ", "חוג פתוח %m.motorType פורט %m.motorNewPort מהירות %d.motorSpeed  זווית %d.degreeValue ","closedloopDegree", "מנוע קטן","A", "30", "180"],
 
 	        	//[" ", "Closed-loop Motion Motor %m.motorType port %m.motorNewPort speed %d.motorSpeed  rotation %d.rotationValue ","closedloopRotation", "SmallMotor","A", "30", "2"],
-	        	[" ", "חוג סגור %m.motorType פורט %m.motorNewPort מהירות %d.motorSpeed  צעד %d.rotationValue ","closedloopRotation", "מנוע קטן","A", "30", "2"],
+	        	[" ", "חוג פתוח %m.motorType פורט %m.motorNewPort מהירות %d.motorSpeed  צעד %d.rotationValue ","closedloopRotation", "מנוע קטן","A", "30", "2"],
 
 				//[" ", "Speaker Hi %m.speakerParam1_0 ","openSpeakerHi", "Hello"],
 				[" ", "אמור %m.speakerParam1_0 ","openSpeakerHi", "שלום"],
