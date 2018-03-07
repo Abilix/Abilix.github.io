@@ -1007,7 +1007,7 @@
 
     	var l_sessionId = genNextID();
     	l_packet.setInt32(l_sessionId);
-    	l_packet.setInt32(portLabels[portId] );
+    	// l_packet.setInt32(portLabels[portId] );
     	l_packet.setInt32(colorLabels[p_color] );
 
     	l_packet.resetCheck();
